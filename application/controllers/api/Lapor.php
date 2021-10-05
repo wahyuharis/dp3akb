@@ -39,31 +39,47 @@ class Lapor extends RestController
 
 	function save_post()
 	{
-		// $data = array();
+		$data = array();
 		$message = 'succes';
 		$status = true;
 		$response = array();
 
-		//$post = $this->input->post();
-		//$data = $post;
+		$post = $this->input->post();
+		$data = $post;
 
-		$data = array(
-			'id_korban'         => $this->post('id_korban'),
-			'id_pelapor'        => $this->post('id_pelapor'),
-			'id_jenis_aduan'    => $this->post('id_jenis_aduan'),
-			'jenis_korban'      => $this->post('jenis_korban'),
-			'nama_korban'       => $this->post('nama_korban'),
-			'jkel_korban'       => $this->post('jkel_korban'),
-			'umur_korban'       => $this->post('umur_korban'),
-			'nik_korban'        => $this->post('nik_korban'),
-			'nohp_korban'       => $this->post('nohp_korban'),
-			'alamat_korban'     => $this->post('alamat_korban'),
-			'aduan_lain'        => $this->post('aduan_lain'),
-			'status_laporan'    => $this->post('status_laporan'),
+		$pelapor = array(
+			'nama_pelapor' => $this->input->post('nama'),
+			'jkel_pelapor' => $this->input->post('jenis_kelamin'),
+			'umur_pelapor' => $this->input->post('umur'),
+			'nohp_pelapor' => $this->input->post('no_telp'),
+			'alamat_pelapor' => $this->input->post('alamat'),
 		);
-		$insert = $this->db->insert('korban', $data);
+
+		$korban = array(
+			'nama_korban' => $this->input->post('nama_korban'),
+			'jkel_korban' => $this->input->post('jenis_kelamin_korban'),
+			'umur_korban' => $this->input->post('umur_korban'),
+			'nohp_korban' => $this->input->post('no_telp_korban'),
+			'alamat_korban' => $this->input->post('alamat_korban'),
+			'jenis_korban' => $this->input->post('jenis_korban'),
+			'id_pelapor' => '',
+			'id_jenis_aduan' => $this->input->post('keterangan_pengaduan'),
+			'aduan_lain' => $this->input->post('keterangan_lain'),
+		);
+
+		$this->db->insert('pelapor', $pelapor);
+		$id_pelapor = $this->db->insert_id();
+
+		if ($korban['id_jenis_aduan'] == 'etc') {
+			$korban['id_jenis_aduan'] = null;
+		}
+
+		$korban['id_pelapor'] = $id_pelapor;
+		$this->db->insert('korban', $korban);
+
+
 		$response = array(
-			'data' => $insert,
+			'data' => $data,
 			'message' => $message,
 			'status' => $status
 		);
