@@ -2,51 +2,51 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Menu Aktif</h1>
-    <a>Data Laporan Korban Anak-anak</a>
-</div>
-
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-	<div class="card-header py-3">
-	<button class="btn btn-light shadow-sm" onclick="reload_table()"><i class="fas fa-sync"></i> Refresh Data</button>
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Menu Aktif</h1>
+		<a>Data Laporan Korban Anak-anak</a>
 	</div>
-	<div class="card-body">
-		<div class="table-responsive">
-			<table id="mytable" class="table table-bordered nowrap" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>Keterangan Pengaduan</th>
-						<th>Nama Korban</th>
-						<th>No. HP Korban</th>
-						<th>No. HP Pelapor</th>
-						<th>Alamat Korban</th>
-						<th>Status Pengaduan</th>
-						<th>Aksi</th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<th>No.</th>
-						<th>Keterangan Pengaduan</th>
-						<th>Nama Korban</th>
-						<th>No. HP Korban</th>
-						<th>No. HP Pelapor</th>
-						<th>Alamat Korban</th>
-						<th>Status Pengaduan</th>
-						<th>Aksi</th>
-					</tr>
-				</tfoot>
-				<tbody>
 
-				</tbody>
-			</table>
+	<!-- DataTales Example -->
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<button class="btn btn-light shadow-sm" onclick="reload_table()"><i class="fas fa-sync"></i> Refresh Data</button>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table id="mytable" class="table table-bordered nowrap" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Keterangan Pengaduan</th>
+							<th>Nama Korban</th>
+							<th>No. HP Korban</th>
+							<th>No. HP Pelapor</th>
+							<th>Alamat Korban</th>
+							<th>Status Pengaduan</th>
+							<th>Aksi</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>No.</th>
+							<th>Keterangan Pengaduan</th>
+							<th>Nama Korban</th>
+							<th>No. HP Korban</th>
+							<th>No. HP Pelapor</th>
+							<th>Alamat Korban</th>
+							<th>Status Pengaduan</th>
+							<th>Aksi</th>
+						</tr>
+					</tfoot>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
 
 </div>
 <!-- /.container-fluid -->
@@ -199,7 +199,7 @@
 	}
 
 	function lihat_laporan(data) {
-		window.location = "anak/lihat_detail/" + data;
+		window.location.href = "<?php echo base_url() ?>superadmin/anak/lihat_detail/" + data;
 	}
 </script>
 

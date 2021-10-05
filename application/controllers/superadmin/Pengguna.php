@@ -12,6 +12,7 @@ class Pengguna extends CI_Controller
 
 		$auth = new Auth();
 		$auth->is_logged_in();
+		$this->load->library('form_validation');
 	}
 
 	public function index()
@@ -28,12 +29,12 @@ class Pengguna extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $no;
-            $row[] = $pengguna->fullname;
-            $row[] = $pengguna->email;
-            $row[] = $pengguna->jabatan;
+			$row[] = $pengguna->fullname;
+			$row[] = $pengguna->email;
+			$row[] = $pengguna->jabatan;
 			$row[] = '<a class="btn btn-info btn-sm" href="javascript:void(0)" title="Edit Data" onclick="edit_user(' . "'" . $pengguna->id_user . "'" . ')"><i class="fas fa-edit"></i></a>
-				  <a class="btn btn-danger btn-sm" href="javascript:void(0)" title="Hapus Data" onclick="hapus_user(' . "'" . $pengguna->id_user . "'" . ')"><i class="fas fa-trash"></i></a>
-                  <a class="btn btn-secondary btn-sm" href="javascript:void(0)" title="Lihat Data" onclick="lihat_user(' . "'" . $pengguna->id_user . "'" . ')"><i class="fas fa-eye"></i></a>';
+				  <a class="btn btn-primary btn-sm" href="javascript:void(0)" title="Lihat Data" onclick="lihat_user(' . "'" . $pengguna->id_user . "'" . ')"><i class="fas fa-eye"></i></a>
+				  <a class="btn btn-danger btn-sm" href="javascript:void(0)" title="Hapus Data" onclick="hapus_user(' . "'" . $pengguna->id_user . "'" . ')"><i class="fas fa-trash"></i></a>';
 
 			$data[] = $row;
 		}
@@ -48,64 +49,111 @@ class Pengguna extends CI_Controller
 		echo json_encode($output);
 	}
 
-	public function ajax_edit($id)
+	public function edit($id = null)
 	{
-		$data = $this->m_pengguna->get_by_id($id);
-		echo json_encode($data);
+		if (!isset($id)) redirect('superadmin/pengguna');
+
+		$data["pengguna"] = $this->m_pengguna->get_by_id($id);
+		if (!$data["pengguna"]) show_404();
+		$this->load->view('superadmin/Edit_pengguna', $data);
 	}
 
-	public function ajax_add()
+	public function tambah()
 	{
-		$this->_validate();
+		$this->load->view('superadmin/Tambah_pengguna');
+	}
 
+	public function simpan()
+	{
+
+		$config = array(
+			array(
+				'field' => 'fullname',
+				'label' => 'Nama',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => '%s tidak boleh kosong',
+				),
+			),
+			array(
+				'field' => 'level',
+				'label' => 'Level',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => '%s tidak boleh kosong',
+				),
+			),
+			array(
+				'field' => 'email',
+				'label' => 'Email',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => '%s tidak boleh kosong',
+				),
+			),
+			array(
+				'field' => 'jabatan',
+				'label' => 'Jabatan',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => '%s tidak boleh kosong',
+				),
+			)
+		);
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() != false) {
+			$fullname = $this->input->post('fullname');
+			$level = $this->input->post('level');
+			$email = $this->input->post('email');
+			$password = $this->input->post('passwd');
+			$jabatan = $this->input->post('jabatan');
+
+			$data = array(
+				'fullname' => $fullname,
+				'level' => $level,
+				'email' => $email,
+				'password' => md5($password),
+				'jabatan' => $jabatan
+			);
+
+			$insert = $this->m_pengguna->save($data);
+			$this->session->set_flashdata('success', 'Data berhasil disimpan');
+			$this->load->view("superadmin/Tambah_pengguna");
+		} else {
+			$this->session->set_flashdata('failed', 'Data gagal disimpan');
+			$this->load->view("superadmin/Tambah_pengguna");
+		}
+	}
+
+	public function update()
+	{
 		$fullname = $this->input->post('fullname');
 		$level = $this->input->post('level');
 		$email = $this->input->post('email');
 		$password = $this->input->post('passwd');
 		$jabatan = $this->input->post('jabatan');
 
-		$data = array(
-			'fullname' => $fullname,
-			'level' => $level,
-			'email' => $email,
-			'password' => md5($password),
-			'jabatan' => $jabatan
-		);
-
-		$insert = $this->m_pengguna->save($data);
-		echo json_encode(array("status" => TRUE));
-	}
-
-	public function ajax_update()
-	{
-		$this->_validate();
-		$fullname = $this->input->post('fullname');
-		$level = $this->input->post('level');
-        $email = $this->input->post('email');
-		$password = $this->input->post('passwd');
-		$jabatan = $this->input->post('jabatan');
-
-        if($password == ""){
-            $data = array(
+		if ($password == "") {
+			$data = array(
 				'fullname' => $fullname,
 				'level' => $level,
-                'email' => $email,
-                'jabatan' => $jabatan
-            );
-           
-        }else{
-            $data = array(
+				'email' => $email,
+				'jabatan' => $jabatan
+			);
+		} else {
+			$data = array(
 				'fullname' => $fullname,
 				'level' => $level,
-                'email' => $email,
-                'password' => md5($password),
-                'jabatan' => $jabatan
-            );
-        }
-
-	
+				'email' => $email,
+				'password' => md5($password),
+				'jabatan' => $jabatan
+			);
+		}
 		$this->m_pengguna->update(array('id_user' => $this->input->post('id_user')), $data);
-		echo json_encode(array("status" => TRUE));
+		$this->session->set_flashdata('success', 'Berhasil disimpan');
+		redirect('superadmin/pengguna/edit/' . $this->input->post('id_user') . '');
 	}
 
 
@@ -128,48 +176,9 @@ class Pengguna extends CI_Controller
 		$this->load->view('superadmin/Lihat_pengguna', $data);
 	}
 
-	private function _validate()
-	{
-		$data = array();
-		$data['error_string'] = array();
-		$data['inputerror'] = array();
-		$data['status'] = TRUE;
-
-		if ($this->input->post('fullname') == '') {
-			$data['inputerror'][] = 'fullname';
-			$data['error_string'][] = 'Fullname tidak boleh kosong';
-			$data['status'] = FALSE;
-		}
-
-		if ($this->input->post('level') == '') {
-			$data['inputerror'][] = 'level';
-			$data['error_string'][] = 'Level tidak boleh kosong';
-			$data['status'] = FALSE;
-		}
-
-		if ($this->input->post('email') == '') {
-			$data['inputerror'][] = 'email';
-			$data['error_string'][] = 'Email tidak boleh kosong';
-			$data['status'] = FALSE;
-		}		
-
-		if ($this->input->post('jabatan') == '') {
-			$data['inputerror'][] = 'jabatan';
-			$data['error_string'][] = 'Jabatan tidak boleh kosong';
-			$data['status'] = FALSE;
-		}
-
-		if ($data['status'] === FALSE) {
-			echo json_encode($data);
-			exit();
-		}
-	}
-
-
 	public  function limit_words($string, $word_limit)
 	{
 		$words = explode(" ", $string);
 		return implode(" ", array_splice($words, 0, $word_limit));
 	}
-
 }

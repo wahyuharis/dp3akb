@@ -15,6 +15,35 @@ class Pengguna_model extends CI_Model
 		$this->load->database();
 	}
 
+	public function rules()
+	{
+		return [
+			[
+				'field' => 'fullname',
+				'label' => 'Fullname',
+				'rules' => 'required'
+			],
+
+			[
+				'field' => 'level',
+				'label' => 'Level',
+				'rules' => 'required'
+			],
+
+			[
+				'field' => 'email',
+				'label' => 'Email',
+				'rules' => 'required'
+			],
+
+			[
+				'field' => 'jabatan',
+				'label' => 'Jabatan',
+				'rules' => 'required'
+			]
+		];
+	}
+
 	private function _get_datatables_query()
 	{
 
