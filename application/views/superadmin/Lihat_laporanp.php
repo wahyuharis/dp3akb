@@ -12,7 +12,7 @@
 
 	<div class="card shadow mb-4">
 		<?php if (!empty($lihat)) { ?>
-			<?php foreach ($lihat as $data) { //ngabsen data
+			<?php foreach ($lihat as $data) { //ngabsen data 
 			?>
 				<?php if ($data['status_laporan'] == 1) { ?>
 					<div class="card border-left-success shadow h-100 py-2">
@@ -138,14 +138,27 @@
 										</div>
 									</div>
 								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Tanggal Pengaduan</label>
+											<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="13" value="<?php echo date('d-m-Y', strtotime($data['created_at'])) ?>" readonly>
+										</div>
+									</div>
+								</div>
 								<!-- </div> -->
-								<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary" tabindex="13">Kembali</a>
+								<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary" tabindex="14">Kembali</a>
 							</form>
 						</div>
 						</div>
 					<?php } ?>
 				<?php } else { ?>
-					<h5 style="color: red; text-align: center">Data tidak ditemukan</h5>
+					<div class="card-body">
+						<h5 style="color: red; text-align: center">Data tidak ditemukan</h5>
+					</div>
+					<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary">Kembali</a>
+
 				<?php } ?>
 					</div>
 
