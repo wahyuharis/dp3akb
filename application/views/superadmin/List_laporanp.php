@@ -5,7 +5,7 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">Menu Aktif</h1>
-		<a>Data Laporan Korban Perempuan</a>
+		<a>Data Pengaduan Korban Perempuan</a>
 	</div>
 
 	<!-- DataTales Example -->
@@ -24,6 +24,7 @@
 							<th>No. HP Korban</th>
 							<th>No. HP Pelapor</th>
 							<th>Alamat Korban</th>
+							<th>Tanggal Pengaduan</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -36,6 +37,7 @@
 							<th>No. HP Korban</th>
 							<th>No. HP Pelapor</th>
 							<th>Alamat Korban</th>
+							<th>Tanggal Pengaduan</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -144,7 +146,7 @@
 				$('[name="id_korban"]').val(data.id_korban);
 				$('[name="status_laporan"]').val(data.status_laporan);
 				$('#modal_form_up').modal('show'); // show bootstrap modal when complete loaded
-				$('.modal-title').text('Edit Status Laporan'); // Set title to Bootstrap modal title
+				$('.modal-title').text('Edit Status Pengaduan'); // Set title to Bootstrap modal title
 
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -180,7 +182,7 @@
 					reload_table();
 					Toast.fire({
 						type: 'success',
-						title: 'Status laporan berhasil diubah'
+						title: 'Status pengaduan berhasil diubah'
 					});
 
 				}

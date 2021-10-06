@@ -6,7 +6,7 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">Menu Aktif</h1>
-		<a>Data Laporan Korban Perempuan</a>
+		<a>Data Pengaduan Korban Perempuan</a>
 	</div>
 	<!-- Content Row -->
 
@@ -35,8 +35,12 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Umur Pelapor</label>
-											<input class="form-control" type="text" name="umur_pelapor" id="umur_pelapor" tabindex="2" value="<?php echo $data['umur_pelapor'] . " Tahun" ?>" readonly>
+											<label>Jenis Kelamin</label>
+											<?php if ($data['jkel_pelapor'] == "L") { ?>
+												<input class="form-control" type="text" name="jkel_pelapor" id="jkel_pelapor" tabindex="2" value="Laki-laki" readonly>
+											<?php } else { ?>
+												<input class="form-control" type="text" name="jkel_pelapor" id="jkel_pelapor" tabindex="2" value="Perempuan" readonly>
+											<?php } ?>
 										</div>
 									</div>
 								</div>
@@ -44,8 +48,8 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Alamat Pelapor</label>
-											<input class="form-control" type="text" name="alamat_pelapor" id="alamat_pelapor" tabindex="3" value="<?php echo $data['alamat_pelapor'] ?>" readonly>
+											<label>Umur Pelapor</label>
+											<input class="form-control" type="text" name="umur_pelapor" id="umur_pelapor" tabindex="3" value="<?php echo $data['umur_pelapor'] . " Tahun" ?>" readonly>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -55,19 +59,32 @@
 										</div>
 									</div>
 								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Alamat Pelapor</label>
+											<input class="form-control" type="text" name="alamat_pelapor" id="alamat_pelapor" tabindex="5" value="<?php echo $data['alamat_pelapor'] ?>" readonly>
+										</div>
+									</div>
+								</div>
 								<br>
 								<h5 style="font-weight:bold">Data Korban</h5>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Nama Korban</label>
-											<input class="form-control" type="text" name="nama_korban" id="nama_korban" tabindex="5" value="<?php echo $data['nama_korban'] ?>" readonly>
+											<input class="form-control" type="text" name="nama_korban" id="nama_korban" tabindex="6" value="<?php echo $data['nama_korban'] ?>" readonly>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Umur Korban</label>
-											<input class="form-control" type="text" name="umur_korban" id="umur_korban" tabindex="6" value="<?php echo $data['umur_korban'] . " Tahun" ?>" readonly>
+											<label>Jenis Kelamin</label>
+											<?php if ($data['jkel_korban'] == "L") { ?>
+												<input class="form-control" type="text" name="jkel_korban" id="jkel_korban" tabindex="7" value="Laki-laki" readonly>
+											<?php } else { ?>
+												<input class="form-control" type="text" name="jkel_korban" id="jkel_korban" tabindex="7" value="Perempuan" readonly>
+											<?php } ?>
 										</div>
 									</div>
 								</div>
@@ -75,25 +92,37 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>Alamat Korban</label>
-											<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="7" value="<?php echo $data['alamat_korban'] ?>" readonly>
+											<label>Umur Korban</label>
+											<input class="form-control" type="text" name="umur_korban" id="umur_korban" tabindex="8" value="<?php echo $data['umur_korban'] . " Tahun" ?>" readonly>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>No. HP Korban</label>
-											<input class="form-control" type="text" name="nohp_korban" id="nohp_korban" tabindex="8" value="<?php echo $data['nohp_korban'] ?>" readonly>
+											<input class="form-control" type="text" name="nohp_korban" id="nohp_korban" tabindex="9" value="<?php echo $data['nohp_korban'] ?>" readonly>
 										</div>
 									</div>
 								</div>
 
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Alamat Korban</label>
+											<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="10" value="<?php echo $data['alamat_korban'] ?>" readonly>
+										</div>
+									</div>
+								</div>
 								<br>
 								<h5 style="font-weight:bold">Lain-lain</h5>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Keterangan Pengaduan</label>
-											<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="9" value="<?php echo $data['keterangan'] ?>" readonly>
+											<?php if ($data['keterangan'] == NULL) { ?>
+												<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['aduan_lain'] ?>" readonly>
+											<?php } else { ?>
+												<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['keterangan'] ?>" readonly>
+											<?php } ?>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -105,12 +134,12 @@
 												$ket = "Belum ditangani";
 											}
 											?>
-											<input class="form-control" type="text" name="status_pengaduan" id="status_pengaduan" tabindex="10" value="<?php echo $ket ?>" readonly>
+											<input class="form-control" type="text" name="status_pengaduan" id="status_pengaduan" tabindex="12" value="<?php echo $ket ?>" readonly>
 										</div>
 									</div>
 								</div>
 								<!-- </div> -->
-								<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary" tabindex="20">Kembali</a>
+								<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary" tabindex="13">Kembali</a>
 							</form>
 						</div>
 						</div>

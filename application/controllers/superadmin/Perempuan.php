@@ -29,11 +29,16 @@ class Perempuan extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			$row[] = $korban->keterangan;
+			if ($korban->keterangan == NULL) {
+				$row[] = 'Lain-lain';
+			} else {
+				$row[] = $korban->keterangan;
+			}
 			$row[] = $korban->nama_korban;
 			$row[] = $korban->nohp_korban;
 			$row[] = $korban->nohp_pelapor;
 			$row[] = $this->limit_words($korban->alamat_korban, 5) . ' ...';
+			$row[] = date('d-m-Y', strtotime($korban->created_at));
 
 			if ($korban->status_laporan == 1)
 				$row[] = '<small class="label label-success"> Selesai ditangani</small>';
