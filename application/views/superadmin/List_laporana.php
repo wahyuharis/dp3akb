@@ -21,10 +21,8 @@
 							<th>No.</th>
 							<th>Keterangan Pengaduan</th>
 							<th>Nama Korban</th>
-							<th>No. HP Korban</th>
+							<th>Umur Korban</th>
 							<th>No. HP Pelapor</th>
-							<th>Alamat Korban</th>
-							<th>Tanggal Pengaduan</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -34,10 +32,8 @@
 							<th>No.</th>
 							<th>Keterangan Pengaduan</th>
 							<th>Nama Korban</th>
-							<th>No. HP Korban</th>
+							<th>Umur Korban</th>
 							<th>No. HP Pelapor</th>
-							<th>Alamat Korban</th>
-							<th>Tanggal Pengaduan</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -224,6 +220,7 @@
 								<select name="status_laporan" id="status_laporan" class="form-control">
 									<option value="1">Selesai ditangani</option>
 									<option value="2">Belum ditangani</option>
+									<option value="3">Dalam Proses</option>
 								</select>
 							</div>
 						</div>
