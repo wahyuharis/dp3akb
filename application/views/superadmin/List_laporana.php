@@ -12,6 +12,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<button class="btn btn-light shadow-sm" onclick="reload_table()"><i class="fas fa-sync"></i> Refresh Data</button>
+			<button class="btn btn-light shadow-sm" onclick="ex_data()"><i class="fas fa-download"></i> Export Excel</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -196,10 +197,57 @@
 		});
 	}
 
+	function ex_data() {
+		save_method = 'add';
+		$('#form')[0].reset(); // reset form on modals
+		$('.form-group').removeClass('has-error'); // clear error class
+		$('.help-block').empty(); // clear error string
+		$('#modal_form').modal('show'); // show bootstrap modal
+		$('.modal-title').text('Export Data Pengaduan'); // Set Title to Bootstrap modal title
+	}
+
 	function lihat_laporan(data) {
 		window.location.href = "<?php echo base_url() ?>superadmin/anak/lihat_detail/" + data;
 	}
 </script>
+
+<div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Export Data Pengaduan</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="#" id="form" class="form-horizontal">
+				<input type="hidden" value="" name="id_korban" />
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>dari Tanggal</label>
+								<input type="date" name="tgl1" id="tgl1" class="form-control" required />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>sampai Tanggal</label>
+								<input type="date" name="tgl2" id="tgl2" class="form-control" required />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="btnUp">Proses</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="modal_form_up" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
