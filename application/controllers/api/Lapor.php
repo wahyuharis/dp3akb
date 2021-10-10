@@ -47,6 +47,7 @@ class Lapor extends RestController
 		$post = $this->input->post();
 		$data = $post;
 
+
 		$pelapor = array(
 			'nama_pelapor' => $this->input->post('nama'),
 			'jkel_pelapor' => $this->input->post('jenis_kelamin'),
@@ -63,16 +64,16 @@ class Lapor extends RestController
 			'alamat_korban' => $this->input->post('alamat_korban'),
 			'jenis_korban' => $this->input->post('jenis_korban'),
 			'id_pelapor' => '',
-			'id_jenis_aduan' => $this->input->post('keterangan_pengaduan'),
+			//'id_jenis_aduan' => $this->input->post('keterangan_pengaduan'),
 			'aduan_lain' => $this->input->post('keterangan_lain'),
 		);
 
 		$this->db->insert('pelapor', $pelapor);
 		$id_pelapor = $this->db->insert_id();
 
-		if ($korban['id_jenis_aduan'] == 'etc') {
+		//if ($korban['id_jenis_aduan'] == 'etc') {
 			$korban['id_jenis_aduan'] = null;
-		}
+		//}
 
 		$korban['id_pelapor'] = $id_pelapor;
 		$this->db->insert('korban', $korban);
