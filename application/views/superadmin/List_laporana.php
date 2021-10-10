@@ -5,13 +5,14 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">Menu Aktif</h1>
-		<a>Data Laporan Korban Anak-anak</a>
+		<a>Data Pengaduan Korban Anak-anak</a>
 	</div>
 
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<button class="btn btn-light shadow-sm" onclick="reload_table()"><i class="fas fa-sync"></i> Refresh Data</button>
+			<button class="btn btn-light shadow-sm" onclick="ex_data()"><i class="fas fa-download"></i> Export Excel</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -21,9 +22,8 @@
 							<th>No.</th>
 							<th>Keterangan Pengaduan</th>
 							<th>Nama Korban</th>
-							<th>No. HP Korban</th>
+							<th>Umur Korban</th>
 							<th>No. HP Pelapor</th>
-							<th>Alamat Korban</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -33,9 +33,8 @@
 							<th>No.</th>
 							<th>Keterangan Pengaduan</th>
 							<th>Nama Korban</th>
-							<th>No. HP Korban</th>
+							<th>Umur Korban</th>
 							<th>No. HP Pelapor</th>
-							<th>Alamat Korban</th>
 							<th>Status Pengaduan</th>
 							<th>Aksi</th>
 						</tr>
@@ -144,7 +143,7 @@
 				$('[name="id_korban"]').val(data.id_korban);
 				$('[name="status_laporan"]').val(data.status_laporan);
 				$('#modal_form_up').modal('show'); // show bootstrap modal when complete loaded
-				$('.modal-title').text('Edit Status Laporan'); // Set title to Bootstrap modal title
+				$('.modal-title').text('Edit Status Pengaduan'); // Set title to Bootstrap modal title
 
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -180,7 +179,7 @@
 					reload_table();
 					Toast.fire({
 						type: 'success',
-						title: 'Status laporan berhasil diubah'
+						title: 'Status pengaduan berhasil diubah'
 					});
 
 				}
@@ -198,10 +197,57 @@
 		});
 	}
 
+	function ex_data() {
+		save_method = 'add';
+		$('#form')[0].reset(); // reset form on modals
+		$('.form-group').removeClass('has-error'); // clear error class
+		$('.help-block').empty(); // clear error string
+		$('#modal_form').modal('show'); // show bootstrap modal
+		$('.modal-title').text('Export Data Pengaduan'); // Set Title to Bootstrap modal title
+	}
+
 	function lihat_laporan(data) {
 		window.location.href = "<?php echo base_url() ?>superadmin/anak/lihat_detail/" + data;
 	}
 </script>
+
+<div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Export Data Pengaduan</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="#" id="form" class="form-horizontal">
+				<input type="hidden" value="" name="id_korban" />
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>dari Tanggal</label>
+								<input type="date" name="tgl1" id="tgl1" class="form-control" required />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>sampai Tanggal</label>
+								<input type="date" name="tgl2" id="tgl2" class="form-control" required />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="btnUp">Proses</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="modal_form_up" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -222,6 +268,7 @@
 								<select name="status_laporan" id="status_laporan" class="form-control">
 									<option value="1">Selesai ditangani</option>
 									<option value="2">Belum ditangani</option>
+									<option value="3">Dalam Proses</option>
 								</select>
 							</div>
 						</div>

@@ -1,38 +1,57 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               10.4.13-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win64
--- HeidiSQL Version:             11.3.0.6295
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 08, 2021 at 04:53 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.4.21
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- Dumping structure for table dp3akb.jenis_pengaduan
-CREATE TABLE IF NOT EXISTS `jenis_pengaduan` (
-  `id_jenis_aduan` int(11) NOT NULL AUTO_INCREMENT,
-  `keterangan` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_jenis_aduan`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+--
+-- Database: `dp3akb`
+--
 
--- Dumping data for table dp3akb.jenis_pengaduan: ~6 rows (approximately)
-/*!40000 ALTER TABLE `jenis_pengaduan` DISABLE KEYS */;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jenis_pengaduan`
+--
+
+CREATE TABLE `jenis_pengaduan` (
+  `id_jenis_aduan` int(11) NOT NULL,
+  `keterangan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jenis_pengaduan`
+--
+
 INSERT INTO `jenis_pengaduan` (`id_jenis_aduan`, `keterangan`) VALUES
-	(1, 'Korban kekerasan fisik (KF)'),
-	(2, 'Korban kekerasan psikis (KP)'),
-	(3, 'Korban kekerasan seksual (KS)'),
-	(4, 'Korban kekerasan penelantaran'),
-	(5, 'Korban kekerasan perdagangan orang/trafficking'),
-	(6, 'Anak Berhadapan dengan Hukum (ABH)');
-/*!40000 ALTER TABLE `jenis_pengaduan` ENABLE KEYS */;
+(1, 'Korban kekerasan fisik (KF)'),
+(2, 'Korban kekerasan psikis (KP)'),
+(3, 'Korban kekerasan seksual (KS)'),
+(4, 'Korban kekerasan penelantaran'),
+(5, 'Korban kekerasan perdagangan orang/trafficking'),
+(6, 'Anak Berhadapan dengan Hukum (ABH)');
 
--- Dumping structure for table dp3akb.korban
-CREATE TABLE IF NOT EXISTS `korban` (
-  `id_korban` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `korban`
+--
+
+CREATE TABLE `korban` (
+  `id_korban` int(11) NOT NULL,
   `id_pelapor` int(11) DEFAULT NULL,
   `id_jenis_aduan` int(11) DEFAULT NULL,
   `jenis_korban` enum('Perempuan','Anak') DEFAULT NULL,
@@ -43,20 +62,46 @@ CREATE TABLE IF NOT EXISTS `korban` (
   `nohp_korban` varchar(15) NOT NULL,
   `alamat_korban` varchar(255) NOT NULL,
   `aduan_lain` text DEFAULT NULL,
-  `status_laporan` int(11) DEFAULT NULL COMMENT '1:Selesai, 2:Belum,',
+  `status_laporan` int(11) DEFAULT NULL COMMENT '1:Selesai, 2:Belum, 3:Dalam Proses',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_korban`) USING BTREE
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dp3akb.korban: ~0 rows (approximately)
-/*!40000 ALTER TABLE `korban` DISABLE KEYS */;
-/*!40000 ALTER TABLE `korban` ENABLE KEYS */;
+--
+-- Dumping data for table `korban`
+--
 
--- Dumping structure for table dp3akb.pelapor
-CREATE TABLE IF NOT EXISTS `pelapor` (
-  `id_pelapor` int(11) NOT NULL AUTO_INCREMENT,
+INSERT INTO `korban` (`id_korban`, `id_pelapor`, `id_jenis_aduan`, `jenis_korban`, `nama_korban`, `jkel_korban`, `umur_korban`, `nik_korban`, `nohp_korban`, `alamat_korban`, `aduan_lain`, `status_laporan`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, NULL, 'Perempuan', 'Ipsum Lorem 1', 'P', 26, '3509127654338880', '087612843999', 'Jl. Indah', 'Testing', 1, '2021-10-06 01:35:25', '2021-10-06 02:07:06', NULL),
+(2, 1, 1, 'Perempuan', 'Ipsum Lorem 2', 'P', 26, '3509127654338880', '087612843999', 'Jl. Semeru', NULL, 2, '2021-10-06 02:09:49', '2021-10-06 02:09:49', NULL),
+(3, 1, 1, 'Perempuan', 'Ipsum Lorem 3', 'P', 26, '3509180327659991', '084321758912', 'Jl. Bromo', NULL, 2, '2021-10-06 02:09:49', '2021-10-06 02:09:49', NULL),
+(4, 1, 2, 'Perempuan', 'Ipsum Lorem 4', 'P', 26, '3509127654338880', '084321758912', 'Jl. Rinjani', NULL, 3, '2021-10-06 02:11:54', '2021-10-08 01:55:32', NULL),
+(5, 1, 5, 'Perempuan', 'Ipsum Lorem 5', 'P', 26, '3509164358760002', '084321758912', 'Jl. Raung', NULL, 1, '2021-10-06 02:11:54', '2021-10-06 07:04:24', NULL),
+(6, 1, 6, 'Anak', 'Ipsum Lorem 6', 'L', 12, '3509127654338880', '087612843999', 'Jl. Slawu', NULL, 2, '2021-10-06 02:32:28', '2021-10-08 02:00:50', NULL),
+(7, 1, NULL, 'Anak', 'Ipsum Lorem 7', 'P', 12, '3509127654338880', '084321758912', 'Jl. Kenangan', 'Testing', 3, '2021-10-06 02:33:25', '2021-10-08 01:54:47', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `korban_jenis_pengaduan_rel`
+--
+
+CREATE TABLE `korban_jenis_pengaduan_rel` (
+  `id_korban_jenis_pengaduan_rel` int(11) NOT NULL,
+  `id_korban` int(11) NOT NULL,
+  `id_jenis_aduan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pelapor`
+--
+
+CREATE TABLE `pelapor` (
+  `id_pelapor` int(11) NOT NULL,
+  `device_id` varchar(200) DEFAULT NULL,
   `nama_pelapor` varchar(255) NOT NULL,
   `jkel_pelapor` enum('L','P') NOT NULL,
   `umur_pelapor` int(11) DEFAULT NULL,
@@ -65,17 +110,24 @@ CREATE TABLE IF NOT EXISTS `pelapor` (
   `alamat_pelapor` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_pelapor`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dp3akb.pelapor: ~0 rows (approximately)
-/*!40000 ALTER TABLE `pelapor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pelapor` ENABLE KEYS */;
+--
+-- Dumping data for table `pelapor`
+--
 
--- Dumping structure for table dp3akb.users
-CREATE TABLE IF NOT EXISTS `users` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+INSERT INTO `pelapor` (`id_pelapor`, `device_id`, `nama_pelapor`, `jkel_pelapor`, `umur_pelapor`, `nik_pelapor`, `nohp_pelapor`, `alamat_pelapor`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, NULL, 'Lorem Ipsum 1', 'L', 20, '3509190405980001', '085123465888', 'Jl. Jalan', '2021-10-06 01:36:36', '2021-10-06 01:36:36', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` int(11) NOT NULL,
   `fullname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -83,19 +135,86 @@ CREATE TABLE IF NOT EXISTS `users` (
   `level` enum('Superadmin','Admin') NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table dp3akb.users: ~3 rows (approximately)
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+--
+-- Dumping data for table `users`
+--
+
 INSERT INTO `users` (`id_user`, `fullname`, `email`, `password`, `jabatan`, `level`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 'Lorem Ipsum', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Ka. Bidang Keluarga Berencana', 'Superadmin', '2021-09-20 10:13:22', '2021-09-24 14:06:37', NULL),
-	(2, 'Lorem Ipsum 2', 'admin2@admin2.com', 'c84258e9c39059a89ab77d846ddab909', 'Ka. Bidang Keluarga Sejahtera', 'Admin', '2021-09-20 10:13:22', '2021-09-27 10:46:43', NULL),
-	(5, 'testes', 'testes@gmail.com', '28b662d883b6d76fd96e4ddc5e9ba780', 'hgfhgfh', 'Admin', '2021-09-27 10:47:31', '2021-09-27 10:47:31', NULL);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+(1, 'Lorem Ipsum', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Ka. Bidang Keluarga Berencana', 'Superadmin', '2021-09-20 03:13:22', '2021-09-24 07:06:37', NULL),
+(2, 'Lorem Ipsum 2', 'admin2@admin2.com', 'c84258e9c39059a89ab77d846ddab909', 'Ka. Bidang Keluarga Sejahtera', 'Admin', '2021-09-20 03:13:22', '2021-09-27 03:46:43', NULL);
 
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `jenis_pengaduan`
+--
+ALTER TABLE `jenis_pengaduan`
+  ADD PRIMARY KEY (`id_jenis_aduan`);
+
+--
+-- Indexes for table `korban`
+--
+ALTER TABLE `korban`
+  ADD PRIMARY KEY (`id_korban`) USING BTREE;
+
+--
+-- Indexes for table `korban_jenis_pengaduan_rel`
+--
+ALTER TABLE `korban_jenis_pengaduan_rel`
+  ADD PRIMARY KEY (`id_korban_jenis_pengaduan_rel`);
+
+--
+-- Indexes for table `pelapor`
+--
+ALTER TABLE `pelapor`
+  ADD PRIMARY KEY (`id_pelapor`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `jenis_pengaduan`
+--
+ALTER TABLE `jenis_pengaduan`
+  MODIFY `id_jenis_aduan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `korban`
+--
+ALTER TABLE `korban`
+  MODIFY `id_korban` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `korban_jenis_pengaduan_rel`
+--
+ALTER TABLE `korban_jenis_pengaduan_rel`
+  MODIFY `id_korban_jenis_pengaduan_rel` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pelapor`
+--
+ALTER TABLE `pelapor`
+  MODIFY `id_pelapor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

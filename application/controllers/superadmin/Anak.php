@@ -29,16 +29,23 @@ class Anak extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			$row[] = $korban->keterangan;
+			if ($korban->keterangan == NULL) {
+				$row[] = 'Lain-lain';
+			} else {
+				$row[] = $korban->keterangan;
+			}
+
 			$row[] = $korban->nama_korban;
-			$row[] = $korban->nohp_korban;
+			$row[] = $korban->umur_korban . " Tahun";
 			$row[] = $korban->nohp_pelapor;
-			$row[] = $this->limit_words($korban->alamat_korban, 5) . ' ...';
+			// $row[] = date('d-m-Y', strtotime($korban->created_at));
 
 			if ($korban->status_laporan == 1)
 				$row[] = '<small class="label label-success"> Selesai ditangani</small>';
-			else
+			elseif ($korban->status_laporan == 2)
 				$row[] = '<small class="label label-danger"> Belum ditangani</small>';
+			else
+				$row[] = '<small class="label label-warning"> Dalam Proses</small>';
 
 			$row[] = '<a class="btn btn-primary btn-sm" href="javascript:void(0)" title="Lihat Data" onclick="lihat_laporan(' . "'" . $korban->id_korban . "'" . ')"><i class="fas fa-eye"></i></a>
 				  <a class="btn btn-danger btn-sm" href="javascript:void(0)" title="Hapus Data" onclick="hapus_laporan(' . "'" . $korban->id_korban . "'" . ')"><i class="fas fa-trash"></i></a>
