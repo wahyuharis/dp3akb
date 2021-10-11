@@ -20,7 +20,17 @@ class Laporan extends RestController
 		$status = true;
 		$response = array();
 
+		$device_id = $this->input->get('device_id');
 
+		$this->load->model('Laporan_model');
+
+		$laporan_model = new Laporan_model();
+
+		if (!empty(trim($device_id))) {
+			$data = $laporan_model->laporan_list($device_id);
+		} else {
+			$status = false;
+		}
 
 		$response = array(
 			'data' => $data,
@@ -38,7 +48,18 @@ class Laporan extends RestController
 		$status = true;
 		$response = array();
 
+		$device_id = $this->input->get('device_id');
+		$id_korban = $this->input->get('id_korban');
 
+		$this->load->model('Laporan_model');
+
+		$laporan_model = new Laporan_model();
+
+		if (!empty(trim($device_id)) && !empty(trim($id_korban)) ) {
+			$data = $laporan_model->laporan_detail($device_id,$id_korban);
+		} else {
+			$status = false;
+		}
 
 		$response = array(
 			'data' => $data,
