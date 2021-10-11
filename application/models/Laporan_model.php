@@ -16,7 +16,11 @@ class Laporan_model extends CI_Model
         JOIN pelapor
         ON pelapor.id_pelapor=korban.id_pelapor
         
-        WHERE pelapor.device_id=" . $this->db->escape($device_id) . " ";
+        WHERE pelapor.device_id=" . $this->db->escape($device_id) . " 
+        
+        ORDER BY id_korban DESC
+        LIMIT 100
+        ";
 
         $db = $this->db->query($sql);
 
