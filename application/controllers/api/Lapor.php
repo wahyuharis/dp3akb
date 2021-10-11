@@ -68,16 +68,32 @@ class Lapor extends RestController
 			'aduan_lain' => $this->input->post('keterangan_lain'),
 		);
 
+		$keterangan_pengaduan = $this->input->post('keterangan_pengaduan');
+
+		if (empty($keterangan_pengaduan) || count($keterangan_pengaduan) < 1) {
+			$korban['aduan_lain'] = null;
+		}
+
 		$this->db->insert('pelapor', $pelapor);
 		$id_pelapor = $this->db->insert_id();
 
 		//if ($korban['id_jenis_aduan'] == 'etc') {
-			$korban['id_jenis_aduan'] = null;
+		$korban['id_jenis_aduan'] = null;
 		//}
 
 		$korban['id_pelapor'] = $id_pelapor;
 		$this->db->insert('korban', $korban);
+		$id_korban = $this->db->insert_id();
 
+		if (!empty($keterangan_pengaduan) || count($keterangan_pengaduan) > 0) {
+			foreach ($keterangan_pengaduan as $id_jenis_aduanrel) {
+				$korban_jenis_pengaduan_rel = array(
+					'id_korban' => $id_korban,
+					'id_jenis_aduan' => $id_jenis_aduanrel
+				);
+				$this->db->insert('korban_jenis_pengaduan_rel', $korban_jenis_pengaduan_rel);
+			}
+		}
 
 		$response = array(
 			'data' => $data,
