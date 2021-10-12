@@ -52,6 +52,25 @@ class Lapor extends RestController
 		// die();
 
 
+		$foto_ktp = null;
+		$config['upload_path']          = './uploads/';
+		$config['allowed_types']        = 'gif|jpg|png';
+		// $config['max_size']             = 2000;
+		// $config['max_width']            = 1024;
+		// $config['max_height']           = 768;
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('ktp')) {
+			$error = array('error' => $this->upload->display_errors());
+		} else {
+			// $data = array('upload_data' => $this->upload->data());
+			$foto_ktp = $this->upload->data('file_name');   
+		}
+
+		// echo "<pre>";
+		// print_r($error);
+		// die();
+
+
 		$pelapor = array(
 			'device_id' => $this->input->post('device_id'),
 			'nama_pelapor' => $this->input->post('nama'),
@@ -59,6 +78,7 @@ class Lapor extends RestController
 			'umur_pelapor' => $this->input->post('umur'),
 			'nohp_pelapor' => $this->input->post('no_telp'),
 			'alamat_pelapor' => $this->input->post('alamat'),
+			'foto_ktp' => $foto_ktp,
 		);
 
 		$korban = array(
