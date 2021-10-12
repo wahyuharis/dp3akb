@@ -97,7 +97,7 @@ class Perempuan_model extends CI_Model
 
 	public function get_by_id($id)
 	{
-		$this->db->select('korban.*, pelapor.nohp_pelapor, jenis_pengaduan.keterangan');
+		$this->db->select('korban.*, pelapor.*, jenis_pengaduan.keterangan');
 		$this->db->from($this->table);
 		$this->db->join('pelapor', 'pelapor.id_pelapor = korban.id_pelapor', 'left');
 		$this->db->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban.id_jenis_aduan', 'left');
@@ -105,5 +105,18 @@ class Perempuan_model extends CI_Model
 		$query = $this->db->get();
 
 		return $query->row();
+	}
+
+	public function getEx($data1, $data2)
+	{
+		$this->db->select('korban.*, pelapor.nama_pelapor, pelapor.umur_pelapor, pelapor.jkel_pelapor, pelapor.nik_pelapor, pelapor.nohp_pelapor, pelapor.alamat_pelapor, pelapor.created_at AS tgl2, jenis_pengaduan.keterangan');
+		$this->db->from('korban');
+		$this->db->join('pelapor', 'pelapor.id_pelapor = korban.id_pelapor', 'left');
+		$this->db->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban.id_jenis_aduan', 'left');
+		$this->db->where('korban.jenis_korban =', 'Perempuan');
+		$this->db->where('korban.created_at >=', $data1 . " 00.00");
+		$this->db->where('korban.created_at <=', $data2 . " 23.59");
+		$query = $this->db->get();
+		return $query->result();
 	}
 }
