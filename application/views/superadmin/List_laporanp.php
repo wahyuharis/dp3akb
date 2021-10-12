@@ -12,6 +12,7 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<button class="btn btn-light shadow-sm" onclick="reload_table()"><i class="fas fa-sync"></i> Refresh Data</button>
+			<!-- <a href="" class="btn btn-light shadow-sm">Export</a> -->
 			<button class="btn btn-light shadow-sm" onclick="ex_data()"><i class="fas fa-download"></i> Export Excel</button>
 		</div>
 		<div class="card-body">
@@ -220,7 +221,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="#" id="form" class="form-horizontal">
+			<form action="<?php echo base_url('superadmin/perempuan/excel') ?>" id="form" class="form-horizontal" method="post">
 				<input type="hidden" value="" name="id_korban" />
 				<div class="modal-body">
 					<div class="row">
@@ -241,7 +242,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="btnUp">Proses</button>
+					<button type="submit" class="btn btn-primary" id="btnDownload">Download</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 				</div>
 			</form>

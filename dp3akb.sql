@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2021 at 04:53 AM
+-- Generation Time: Oct 12, 2021 at 03:20 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -75,8 +75,8 @@ CREATE TABLE `korban` (
 INSERT INTO `korban` (`id_korban`, `id_pelapor`, `id_jenis_aduan`, `jenis_korban`, `nama_korban`, `jkel_korban`, `umur_korban`, `nik_korban`, `nohp_korban`, `alamat_korban`, `aduan_lain`, `status_laporan`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, NULL, 'Perempuan', 'Ipsum Lorem 1', 'P', 26, '3509127654338880', '087612843999', 'Jl. Indah', 'Testing', 1, '2021-10-06 01:35:25', '2021-10-06 02:07:06', NULL),
 (2, 1, 1, 'Perempuan', 'Ipsum Lorem 2', 'P', 26, '3509127654338880', '087612843999', 'Jl. Semeru', NULL, 2, '2021-10-06 02:09:49', '2021-10-06 02:09:49', NULL),
-(3, 1, 1, 'Perempuan', 'Ipsum Lorem 3', 'P', 26, '3509180327659991', '084321758912', 'Jl. Bromo', NULL, 2, '2021-10-06 02:09:49', '2021-10-06 02:09:49', NULL),
-(4, 1, 2, 'Perempuan', 'Ipsum Lorem 4', 'P', 26, '3509127654338880', '084321758912', 'Jl. Rinjani', NULL, 3, '2021-10-06 02:11:54', '2021-10-08 01:55:32', NULL),
+(3, 1, 1, 'Perempuan', 'Ipsum Lorem 3', 'P', 26, '3509180327659991', '084321758912', 'Jl. Bromo', NULL, 2, '2021-10-07 02:09:49', '2021-10-11 02:08:40', NULL),
+(4, 1, 2, 'Perempuan', 'Ipsum Lorem 4', 'P', 26, '3509127654338880', '084321758912', 'Jl. Rinjani', NULL, 3, '2021-10-07 02:11:54', '2021-10-11 02:08:36', NULL),
 (5, 1, 5, 'Perempuan', 'Ipsum Lorem 5', 'P', 26, '3509164358760002', '084321758912', 'Jl. Raung', NULL, 1, '2021-10-06 02:11:54', '2021-10-06 07:04:24', NULL),
 (6, 1, 6, 'Anak', 'Ipsum Lorem 6', 'L', 12, '3509127654338880', '087612843999', 'Jl. Slawu', NULL, 2, '2021-10-06 02:32:28', '2021-10-08 02:00:50', NULL),
 (7, 1, NULL, 'Anak', 'Ipsum Lorem 7', 'P', 12, '3509127654338880', '084321758912', 'Jl. Kenangan', 'Testing', 3, '2021-10-06 02:33:25', '2021-10-08 01:54:47', NULL);
@@ -106,6 +106,7 @@ CREATE TABLE `pelapor` (
   `jkel_pelapor` enum('L','P') NOT NULL,
   `umur_pelapor` int(11) DEFAULT NULL,
   `nik_pelapor` char(16) DEFAULT NULL,
+  `foto_ktp` varchar(200) DEFAULT NULL,
   `nohp_pelapor` varchar(15) NOT NULL,
   `alamat_pelapor` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -117,8 +118,8 @@ CREATE TABLE `pelapor` (
 -- Dumping data for table `pelapor`
 --
 
-INSERT INTO `pelapor` (`id_pelapor`, `device_id`, `nama_pelapor`, `jkel_pelapor`, `umur_pelapor`, `nik_pelapor`, `nohp_pelapor`, `alamat_pelapor`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, NULL, 'Lorem Ipsum 1', 'L', 20, '3509190405980001', '085123465888', 'Jl. Jalan', '2021-10-06 01:36:36', '2021-10-06 01:36:36', NULL);
+INSERT INTO `pelapor` (`id_pelapor`, `device_id`, `nama_pelapor`, `jkel_pelapor`, `umur_pelapor`, `nik_pelapor`, `foto_ktp`, `nohp_pelapor`, `alamat_pelapor`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, NULL, 'Lorem Ipsum 1', 'L', 20, '3509190405980001', NULL, '085123465888', 'Jl. Jalan', '2021-10-06 01:36:36', '2021-10-06 01:36:36', NULL);
 
 -- --------------------------------------------------------
 
