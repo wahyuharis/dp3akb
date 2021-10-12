@@ -27,7 +27,12 @@ class Laporan extends RestController
 		$laporan_model = new Laporan_model();
 
 		if (!empty(trim($device_id))) {
-			$data = $laporan_model->laporan_list($device_id);
+			$res = $laporan_model->laporan_list($device_id);
+			if($res){
+				$data=$res;
+			}else{
+				$status=false;
+			}
 		} else {
 			$status = false;
 		}
@@ -56,7 +61,12 @@ class Laporan extends RestController
 		$laporan_model = new Laporan_model();
 
 		if (!empty(trim($device_id)) && !empty(trim($id_korban)) ) {
-			$data = $laporan_model->laporan_detail($device_id,$id_korban);
+			$res = $laporan_model->laporan_detail($device_id,$id_korban);
+			if($res){
+				$data=$res;
+			}else{
+				$status=false;
+			}
 		} else {
 			$status = false;
 		}

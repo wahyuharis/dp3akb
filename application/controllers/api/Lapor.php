@@ -47,8 +47,13 @@ class Lapor extends RestController
 		$post = $this->input->post();
 		$data = $post;
 
+		// echo "<pre>";
+		// print_r($_FILES);
+		// die();
+
 
 		$pelapor = array(
+			'device_id' => $this->input->post('device_id'),
 			'nama_pelapor' => $this->input->post('nama'),
 			'jkel_pelapor' => $this->input->post('jenis_kelamin'),
 			'umur_pelapor' => $this->input->post('umur'),
