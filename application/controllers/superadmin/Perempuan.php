@@ -34,11 +34,14 @@ class Perempuan extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			if ($korban->keterangan == NULL) {
+			if ($korban->aduan_lain == NULL && $korban->id_jenis_aduan != NULL) {
+				$row[] = $korban->keterangan;
+			} else if ($korban->aduan_lain != NULL && $korban->id_jenis_aduan == NULL) {
 				$row[] = 'Lain-lain';
 			} else {
-				$row[] = $korban->keterangan;
+				$row[] = 'Lebih dari satu';
 			}
+
 			$row[] = $korban->nama_korban;
 			$row[] = $korban->umur_korban . " Tahun";
 			$row[] = $korban->nohp_pelapor;
@@ -77,6 +80,7 @@ class Perempuan extends CI_Controller
 	public function lihat_detail($id)
 	{
 		$data['lihat']  = $this->m_perempuan->get_lihat_id($id);
+		$data['list']  = $this->m_perempuan->get_list_id($id);
 		$this->load->view('superadmin/Lihat_laporanp', $data);
 	}
 

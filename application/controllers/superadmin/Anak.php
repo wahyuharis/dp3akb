@@ -29,10 +29,12 @@ class Anak extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			if ($korban->keterangan == NULL) {
+			if ($korban->aduan_lain == NULL && $korban->id_jenis_aduan != NULL) {
+				$row[] = $korban->keterangan;
+			} else if ($korban->aduan_lain != NULL && $korban->id_jenis_aduan == NULL) {
 				$row[] = 'Lain-lain';
 			} else {
-				$row[] = $korban->keterangan;
+				$row[] = 'Lebih dari satu';
 			}
 
 			$row[] = $korban->nama_korban;
@@ -73,6 +75,7 @@ class Anak extends CI_Controller
 	public function lihat_detail($id)
 	{
 		$data['lihat']  = $this->m_anak->get_lihat_id($id);
+		$data['list']  = $this->m_anak->get_list_id($id);
 		$this->load->view('superadmin/Lihat_laporana', $data);
 	}
 
