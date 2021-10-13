@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 03:20 AM
+-- Generation Time: Oct 13, 2021 at 08:51 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -59,8 +59,8 @@ CREATE TABLE `korban` (
   `jkel_korban` enum('L','P') NOT NULL,
   `umur_korban` int(11) NOT NULL,
   `nik_korban` char(16) DEFAULT NULL,
-  `nohp_korban` varchar(15) NOT NULL,
-  `alamat_korban` varchar(255) NOT NULL,
+  `nohp_korban` varchar(15) DEFAULT NULL,
+  `alamat_korban` varchar(255) DEFAULT NULL,
   `aduan_lain` text DEFAULT NULL,
   `status_laporan` int(11) DEFAULT NULL COMMENT '1:Selesai, 2:Belum, 3:Dalam Proses',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -73,13 +73,15 @@ CREATE TABLE `korban` (
 --
 
 INSERT INTO `korban` (`id_korban`, `id_pelapor`, `id_jenis_aduan`, `jenis_korban`, `nama_korban`, `jkel_korban`, `umur_korban`, `nik_korban`, `nohp_korban`, `alamat_korban`, `aduan_lain`, `status_laporan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, NULL, 'Perempuan', 'Ipsum Lorem 1', 'P', 26, '3509127654338880', '087612843999', 'Jl. Indah', 'Testing', 1, '2021-10-06 01:35:25', '2021-10-06 02:07:06', NULL),
+(1, 1, NULL, 'Perempuan', 'Ipsum Lorem 1', 'P', 26, NULL, '087612843999', 'Jl. Indah', 'Testing', 1, '2021-10-06 01:35:25', '2021-10-12 04:01:56', NULL),
 (2, 1, 1, 'Perempuan', 'Ipsum Lorem 2', 'P', 26, '3509127654338880', '087612843999', 'Jl. Semeru', NULL, 2, '2021-10-06 02:09:49', '2021-10-06 02:09:49', NULL),
 (3, 1, 1, 'Perempuan', 'Ipsum Lorem 3', 'P', 26, '3509180327659991', '084321758912', 'Jl. Bromo', NULL, 2, '2021-10-07 02:09:49', '2021-10-11 02:08:40', NULL),
 (4, 1, 2, 'Perempuan', 'Ipsum Lorem 4', 'P', 26, '3509127654338880', '084321758912', 'Jl. Rinjani', NULL, 3, '2021-10-07 02:11:54', '2021-10-11 02:08:36', NULL),
 (5, 1, 5, 'Perempuan', 'Ipsum Lorem 5', 'P', 26, '3509164358760002', '084321758912', 'Jl. Raung', NULL, 1, '2021-10-06 02:11:54', '2021-10-06 07:04:24', NULL),
 (6, 1, 6, 'Anak', 'Ipsum Lorem 6', 'L', 12, '3509127654338880', '087612843999', 'Jl. Slawu', NULL, 2, '2021-10-06 02:32:28', '2021-10-08 02:00:50', NULL),
-(7, 1, NULL, 'Anak', 'Ipsum Lorem 7', 'P', 12, '3509127654338880', '084321758912', 'Jl. Kenangan', 'Testing', 3, '2021-10-06 02:33:25', '2021-10-08 01:54:47', NULL);
+(7, 1, NULL, 'Anak', 'Ipsum Lorem 7', 'P', 12, '3509127654338880', '084321758912', 'Jl. Kenangan', 'Testing', 1, '2021-10-06 02:33:25', '2021-10-13 06:43:56', NULL),
+(8, 13, NULL, 'Anak', 'bfjdk', 'L', 13, NULL, NULL, NULL, NULL, 2, '2021-10-12 03:08:55', '2021-10-13 06:45:29', NULL),
+(9, 14, NULL, 'Perempuan', 'haiah', 'P', 22, NULL, NULL, NULL, NULL, 2, '2021-10-13 04:13:38', '2021-10-13 06:47:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -92,6 +94,16 @@ CREATE TABLE `korban_jenis_pengaduan_rel` (
   `id_korban` int(11) NOT NULL,
   `id_jenis_aduan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `korban_jenis_pengaduan_rel`
+--
+
+INSERT INTO `korban_jenis_pengaduan_rel` (`id_korban_jenis_pengaduan_rel`, `id_korban`, `id_jenis_aduan`) VALUES
+(1, 8, 2),
+(2, 8, 6),
+(3, 9, 2),
+(4, 9, 3);
 
 -- --------------------------------------------------------
 
@@ -119,7 +131,9 @@ CREATE TABLE `pelapor` (
 --
 
 INSERT INTO `pelapor` (`id_pelapor`, `device_id`, `nama_pelapor`, `jkel_pelapor`, `umur_pelapor`, `nik_pelapor`, `foto_ktp`, `nohp_pelapor`, `alamat_pelapor`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, NULL, 'Lorem Ipsum 1', 'L', 20, '3509190405980001', NULL, '085123465888', 'Jl. Jalan', '2021-10-06 01:36:36', '2021-10-06 01:36:36', NULL);
+(1, NULL, 'Lorem Ipsum 1', 'L', 20, NULL, NULL, '085123465888', 'Jl. Jalan', '2021-10-06 01:36:36', '2021-10-12 07:42:28', NULL),
+(13, '12c1e41af22e30e0', 'jdjdj', 'L', 12, NULL, 'IMG-20211012-WA0002.jpg', '868686494966', 'mxmdm', '2021-10-12 03:08:55', '2021-10-12 03:08:55', NULL),
+(14, '12c1e41af22e30e0', 'rosid', 'L', 24, NULL, 'IMG-20211013-WA0009.jpg', '084321967851', 'jember', '2021-10-13 04:13:38', '2021-10-13 04:13:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,19 +209,19 @@ ALTER TABLE `jenis_pengaduan`
 -- AUTO_INCREMENT for table `korban`
 --
 ALTER TABLE `korban`
-  MODIFY `id_korban` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_korban` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `korban_jenis_pengaduan_rel`
 --
 ALTER TABLE `korban_jenis_pengaduan_rel`
-  MODIFY `id_korban_jenis_pengaduan_rel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_korban_jenis_pengaduan_rel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pelapor`
 --
 ALTER TABLE `pelapor`
-  MODIFY `id_pelapor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_pelapor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`

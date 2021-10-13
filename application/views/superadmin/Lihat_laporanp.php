@@ -137,13 +137,22 @@
 									<br>
 									<h5 style="font-weight:bold">Lain-lain</h5>
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-12">
 											<div class="form-group">
 												<label>Keterangan Pengaduan</label>
-												<?php if ($data['keterangan'] == NULL) { ?>
+												<?php if ($data['aduan_lain'] == NULL && $data['id_jenis_aduan'] != NULL) { ?>
+													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['keterangan'] ?>" readonly>
+												<?php } else if ($data['aduan_lain'] != NULL && $data['id_jenis_aduan'] == NULL) { ?>
 													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['aduan_lain'] ?>" readonly>
 												<?php } else { ?>
-													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['keterangan'] ?>" readonly>
+													<ul>
+														<?php foreach ($list as $data21) { //ngabsen data
+														?>
+
+															<li><?php echo $data21['keterangan']; ?></li>
+
+														<?php } ?>
+													</ul>
 												<?php } ?>
 											</div>
 										</div>
