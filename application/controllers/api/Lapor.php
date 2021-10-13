@@ -26,9 +26,6 @@ class Lapor extends RestController
 
 		$data = $lapor_model->pelapor_last_data($device_id);
 
-		// echo $this->db->last_query();
-		// die();
-
 		$response = array(
 			'data' => $data,
 			'message' => $message,
@@ -46,11 +43,6 @@ class Lapor extends RestController
 		$response = array();
 
 		$post = $this->input->post();
-		// $data = $post;
-
-		// echo "<pre>";
-		// print_r($_FILES);
-		// die();
 
 
 		$foto_ktp = null;
@@ -63,13 +55,9 @@ class Lapor extends RestController
 		if (!$this->upload->do_upload('ktp')) {
 			$error = array('error' => $this->upload->display_errors());
 		} else {
-			// $data = array('upload_data' => $this->upload->data());
 			$foto_ktp = $this->upload->data('file_name');
 		}
 
-		// echo "<pre>";
-		// print_r($error);
-		// die();
 
 		if (empty($foto_ktp) && !empty(trim($this->input->post('ktp_old')))) {
 			$foto_ktp = $this->input->post('ktp_old');
@@ -100,11 +88,9 @@ class Lapor extends RestController
 
 		$keterangan_pengaduan = $this->input->post('keterangan_pengaduan');
 
-		if (empty($keterangan_pengaduan) || count($keterangan_pengaduan) < 1) {
+		if (is_array($keterangan_pengaduan)) {
 			$korban['aduan_lain'] = null;
 		}
-
-
 
 		$this->db->insert('pelapor', $pelapor);
 		$id_pelapor = $this->db->insert_id();
@@ -117,7 +103,8 @@ class Lapor extends RestController
 		$this->db->insert('korban', $korban);
 		$id_korban = $this->db->insert_id();
 
-		if (!empty($keterangan_pengaduan) || count($keterangan_pengaduan) > 0) {
+		// if (!empty($keterangan_pengaduan) || count($keterangan_pengaduan) > 0) {
+		if (is_array($keterangan_pengaduan)) {
 			foreach ($keterangan_pengaduan as $id_jenis_aduanrel) {
 				$korban_jenis_pengaduan_rel = array(
 					'id_korban' => $id_korban,
@@ -135,8 +122,9 @@ class Lapor extends RestController
 		$response = array(
 			'data' => $data,
 			'message' => $message,
-			'status' => $status
-			// 'status' => false
+			// 'status' => $status,
+			'status' => false
+
 		);
 
 		$this->response($response, 200);
