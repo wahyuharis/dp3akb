@@ -77,6 +77,7 @@ class Perempuan extends CI_Controller
 	public function lihat_detail($id)
 	{
 		$data['lihat']  = $this->m_perempuan->get_lihat_id($id);
+		$data['list']  = $this->m_perempuan->get_list_id($id);
 		$this->load->view('superadmin/Lihat_laporanp', $data);
 	}
 

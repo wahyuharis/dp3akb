@@ -89,6 +89,18 @@ class Anak_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function get_list_id($id)
+	{
+		$this->db->select('korban_jenis_pengaduan_rel.*,korban.id_korban,jenis_pengaduan.*');
+		$this->db->from('korban_jenis_pengaduan_rel');
+		$this->db->join('korban', 'korban.id_korban= korban_jenis_pengaduan_rel.id_korban', 'left');
+		$this->db->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban_jenis_pengaduan_rel.id_jenis_aduan', 'left');
+		$this->db->where('korban.id_korban', $id);
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function update($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);

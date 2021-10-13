@@ -73,6 +73,7 @@ class Anak extends CI_Controller
 	public function lihat_detail($id)
 	{
 		$data['lihat']  = $this->m_anak->get_lihat_id($id);
+		$data['list']  = $this->m_anak->get_list_id($id);
 		$this->load->view('superadmin/Lihat_laporana', $data);
 	}
 

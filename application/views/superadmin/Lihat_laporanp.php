@@ -63,10 +63,20 @@
 									</div>
 
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<label>Alamat Pelapor</label>
 												<input class="form-control" type="text" name="alamat_pelapor" id="alamat_pelapor" tabindex="5" value="<?php echo $data['alamat_pelapor'] ?>" readonly>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Foto KTP Pelapor</label><br>
+												<?php if ($data['foto_ktp'] == NULL) { ?>
+													<h6 style="color:red">Tidak Ada Foto KTP</h6>
+												<?php } else { ?>
+													<a href="<?php echo base_url('uploads/' . $data['foto_ktp']) ?>" target="_blank">Lihat Foto KTP</a>
+												<?php } ?>
 											</div>
 										</div>
 									</div>
@@ -101,7 +111,12 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>No. HP Korban</label>
-												<input class="form-control" type="text" name="nohp_korban" id="nohp_korban" tabindex="9" value="<?php echo $data['nohp_korban'] ?>" readonly>
+												<?php if ($data['nohp_korban'] == NULL || $data['nohp_korban'] == "") { ?>
+													<input class="form-control" type="text" name="nohp_korban" id="nohp_korban" tabindex="9" value="-" readonly>
+												<?php } else { ?>
+													<input class="form-control" type="text" name="nohp_korban" id="nohp_korban" tabindex="9" value="<?php echo $data['nohp_korban'] ?>" readonly>
+												<?php } ?>
+
 											</div>
 										</div>
 									</div>
@@ -110,7 +125,12 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label>Alamat Korban</label>
-												<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="10" value="<?php echo $data['alamat_korban'] ?>" readonly>
+												<?php if ($data['alamat_korban'] == NULL || $data['alamat_korban'] == "") { ?>
+													<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="10" value="-" readonly>
+												<?php } else { ?>
+													<input class="form-control" type="text" name="alamat_korban" id="alamat_korban" tabindex="10" value="<?php echo $data['alamat_korban'] ?>" readonly>
+												<?php } ?>
+
 											</div>
 										</div>
 									</div>
@@ -127,6 +147,10 @@
 												<?php } ?>
 											</div>
 										</div>
+
+									</div>
+
+									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Status Pengaduan</label>
@@ -141,10 +165,7 @@
 												<input class="form-control" type="text" name="status_pengaduan" id="status_pengaduan" tabindex="12" value="<?php echo $ket ?>" readonly>
 											</div>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												<label>Tanggal Pengaduan</label>
 												<?php $initgl = date('Y-m-d', strtotime($data['created_at'])) ?>
@@ -154,12 +175,6 @@
 									</div>
 									<!-- </div> -->
 									<a href="<?php echo base_url(); ?>superadmin/perempuan" class="btn btn-secondary" tabindex="14">Kembali</a>
-									<?php if ($data['foto_ktp'] == NULL) { ?>
-										<a href="#" class="btn btn-primary" target="_blank" style="pointer-events: none; cursor: default;">Tidak Ada Foto KTP</a>
-									<?php } else { ?>
-										<a href="<?php echo base_url('uploads/' . $data['foto_ktp']) ?>" class="btn btn-primary" target="_blank">Lihat Foto KTP</a>
-									<?php } ?>
-
 								</form>
 							</div>
 							</div>
