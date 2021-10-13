@@ -132,8 +132,10 @@
 												<label>Status Pengaduan</label>
 												<?php if ($data['status_laporan'] == 1) {
 													$ket = "Selesai ditangani";
-												} else {
+												} else if ($data['status_laporan'] == 2) {
 													$ket = "Belum ditangani";
+												} else {
+													$ket = "Dalam proses";
 												}
 												?>
 												<input class="form-control" type="text" name="status_pengaduan" id="status_pengaduan" tabindex="12" value="<?php echo $ket ?>" readonly>
@@ -151,6 +153,11 @@
 									</div>
 									<!-- </div> -->
 									<a href="<?php echo base_url(); ?>superadmin/anak" class="btn btn-secondary" tabindex="14">Kembali</a>
+									<?php if ($data['foto_ktp'] == NULL) { ?>
+										<a href="#" class="btn btn-primary" target="_blank" style="pointer-events: none; cursor: default;">Tidak Ada Foto KTP</a>
+									<?php } else { ?>
+										<a href="<?php echo base_url('uploads/' . $data['foto_ktp']) ?>" class="btn btn-primary" target="_blank">Lihat Foto KTP</a>
+									<?php } ?>
 								</form>
 							</div>
 							</div>
