@@ -12,7 +12,7 @@ class Lapor extends RestController
 		$this->load->database();
 	}
 
-	//Menampilkan data kontak
+	//Menampilkan data pelapor terakhir
 	function index_get()
 	{
 		$data = array();
@@ -20,13 +20,14 @@ class Lapor extends RestController
 		$status = true;
 		$response = array();
 
-		$id = $this->get('id_korban');
-		if ($id == '') {
-			$data = $this->db->get('korban')->result();
-		} else {
-			$this->db->where('id_korban', $id);
-			$data = $this->db->get('korban')->result();
-		}
+		$device_id = $this->input->get('device_id');
+		$this->load->model('Lapor_model');
+		$lapor_model = new Lapor_model();
+
+		$data = $lapor_model->pelapor_last_data($device_id);
+
+		// echo $this->db->last_query();
+		// die();
 
 		$response = array(
 			'data' => $data,
@@ -45,7 +46,7 @@ class Lapor extends RestController
 		$response = array();
 
 		$post = $this->input->post();
-		$data = $post;
+		// $data = $post;
 
 		// echo "<pre>";
 		// print_r($_FILES);
@@ -63,12 +64,16 @@ class Lapor extends RestController
 			$error = array('error' => $this->upload->display_errors());
 		} else {
 			// $data = array('upload_data' => $this->upload->data());
-			$foto_ktp = $this->upload->data('file_name');   
+			$foto_ktp = $this->upload->data('file_name');
 		}
 
 		// echo "<pre>";
 		// print_r($error);
 		// die();
+
+		if (empty($foto_ktp) && !empty(trim($this->input->post('ktp_old')))) {
+			$foto_ktp = $this->input->post('ktp_old');
+		}
 
 
 		$pelapor = array(
@@ -99,6 +104,8 @@ class Lapor extends RestController
 			$korban['aduan_lain'] = null;
 		}
 
+
+
 		$this->db->insert('pelapor', $pelapor);
 		$id_pelapor = $this->db->insert_id();
 
@@ -120,10 +127,16 @@ class Lapor extends RestController
 			}
 		}
 
+		$data = array(
+			'korban' => $korban,
+			'pelapor' => $pelapor
+		);
+
 		$response = array(
 			'data' => $data,
 			'message' => $message,
-			'status' => $status
+			// 'status' => $status
+			'status' => false
 		);
 
 		$this->response($response, 200);
