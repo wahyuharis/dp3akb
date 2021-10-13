@@ -122,8 +122,8 @@ class Lapor extends RestController
 		$response = array(
 			'data' => $data,
 			'message' => $message,
-			// 'status' => $status,
-			'status' => false
+			'status' => $status,
+			// 'status' => false
 
 		);
 
