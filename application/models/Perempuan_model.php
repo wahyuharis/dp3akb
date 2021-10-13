@@ -119,4 +119,9 @@ class Perempuan_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+	public function getCount($data1, $data2)
+	{
+		return $this->db->query("SELECT COUNT(*) AS jml FROM korban WHERE jenis_korban='Perempuan' AND (created_at BETWEEN '" . $data1 . ' 00:00' . "' AND '" . $data2 . ' 23:59' . "')")->row();
+	}
 }
