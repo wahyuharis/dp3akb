@@ -84,12 +84,13 @@ class Lapor extends RestController
 			'id_pelapor' => '',
 			//'id_jenis_aduan' => $this->input->post('keterangan_pengaduan'),
 			'aduan_lain' => $this->input->post('keterangan_lain'),
+			'status_laporan' => 2,
 		);
 
 		$keterangan_pengaduan = $this->input->post('keterangan_pengaduan');
 
 		if (is_array($keterangan_pengaduan)) {
-			$korban['aduan_lain'] = null;
+			$korban['aduan_lain'] = NULL;
 		}
 
 		$this->db->insert('pelapor', $pelapor);
