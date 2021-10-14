@@ -140,11 +140,7 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label>Keterangan Pengaduan</label>
-												<?php if ($data['aduan_lain'] == NULL && $data['id_jenis_aduan'] != NULL) { ?>
-													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['keterangan'] ?>" readonly>
-												<?php } else if ($data['aduan_lain'] != NULL && $data['id_jenis_aduan'] == NULL) { ?>
-													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['aduan_lain'] ?>" readonly>
-												<?php } else { ?>
+												<?php if ($data['aduan_lain'] == NULL) { ?>
 													<ul>
 														<?php foreach ($list as $data21) { //ngabsen data
 														?>
@@ -153,6 +149,9 @@
 
 														<?php } ?>
 													</ul>
+
+												<?php } else { ?>
+													<input class="form-control" type="text" name="keterangan_pengaduan" id="keterangan_pengaduan" tabindex="11" value="<?php echo $data['aduan_lain'] ?>" readonly>
 												<?php } ?>
 											</div>
 										</div>

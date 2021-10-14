@@ -23,6 +23,23 @@ class Perempuan extends CI_Controller
 		$this->load->view('superadmin/List_laporanp');
 	}
 
+	function column_jenis_aduan($row)
+	{
+		$return = null;
+		$db =	$this->db->where('id_korban', $row->id_korban)
+			->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban_jenis_pengaduan_rel.id_jenis_aduan')
+			->get('korban_jenis_pengaduan_rel');
+
+		$html = '';
+		foreach ($db->result() as $res) {
+
+			$html .= "<span class='badge badge-dark'>" . $res->keterangan . "</span><br> ";
+		}
+		$return = $html;
+
+		return $return;
+	}
+
 
 	public function ajax_list()
 	{
@@ -34,12 +51,11 @@ class Perempuan extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			if ($korban->aduan_lain == NULL && $korban->id_jenis_aduan != NULL) {
-				$row[] = $korban->keterangan;
-			} else if ($korban->aduan_lain != NULL && $korban->id_jenis_aduan == NULL) {
-				$row[] = 'Lain-lain';
+			if ($korban->aduan_lain == NULL) {
+				$row[] = $this->column_jenis_aduan($korban);
 			} else {
-				$row[] = 'Lebih dari satu';
+				// $row[] = "<span class='badge badge-dark'>" . $korban->aduan_lain . "</span>";
+				$row[] = '<span class="badge badge-dark">Lain-lain</span>';
 			}
 
 			$row[] = $korban->nama_korban;

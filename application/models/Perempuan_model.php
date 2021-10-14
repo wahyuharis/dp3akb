@@ -5,8 +5,8 @@ class Perempuan_model extends CI_Model
 {
 
 	var $table = 'korban';
-	var $column_order = array('keterangan', 'nama_korban', 'nohp_korban', 'nohp_pelapor', 'alamat_korban', 'created_at', 'status_laporan', null); //set column field database for datatable orderable
-	var $column_search = array('keterangan', 'nama_korban', 'nohp_korban', 'nohp_pelapor', 'alamat_korban'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $column_order = array('keterangan', 'nama_korban', 'umur_korban', 'nohp_pelapor', 'status_laporan', 'created_at', null); //set column field database for datatable orderable
+	var $column_search = array('keterangan', 'nama_korban', 'nohp_pelapor'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('id_korban' => 'desc'); // default order 
 
 	public function __construct()

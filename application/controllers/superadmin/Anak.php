@@ -30,7 +30,7 @@ class Anak extends CI_Controller
 		$html = '';
 		foreach ($db->result() as $res) {
 
-			$html .= "<span class='badge badge-secondary'>" . $res->keterangan . "</span><br> ";
+			$html .= "<span class='badge badge-dark'>" . $res->keterangan . "</span><br> ";
 		}
 
 
@@ -50,8 +50,12 @@ class Anak extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-
-			$row[] = $this->column_jenis_aduan($korban);
+			if ($korban->aduan_lain == NULL) {
+				$row[] = $this->column_jenis_aduan($korban);
+			} else {
+				// $row[] = "<span class='badge badge-dark'>" . $korban->aduan_lain . "</span>";
+				$row[] = '<span class="badge badge-dark">Lain-lain</span>';
+			}
 
 			$row[] = $korban->nama_korban;
 			$row[] = $korban->umur_korban . " Tahun";
