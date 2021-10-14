@@ -18,6 +18,27 @@ class Anak extends CI_Controller
 		$this->load->view('superadmin/List_laporana');
 	}
 
+	function column_jenis_aduan($row)
+	{
+		$return = null;
+
+
+		$db =	$this->db->where('id_korban', $row->id_korban)
+			->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban_jenis_pengaduan_rel.id_jenis_aduan')
+			->get('korban_jenis_pengaduan_rel');
+
+		$html = '';
+		foreach ($db->result() as $res) {
+
+			$html .= "<span class='badge badge-secondary'>" . $res->keterangan . "</span><br> ";
+		}
+
+
+		$return = $html;
+
+		return $return;
+	}
+
 
 	public function ajax_list()
 	{
@@ -29,13 +50,8 @@ class Anak extends CI_Controller
 			$row = array();
 			$row[] = $no;
 
-			if ($korban->aduan_lain == NULL && $korban->id_jenis_aduan != NULL) {
-				$row[] = $korban->keterangan;
-			} else if ($korban->aduan_lain != NULL && $korban->id_jenis_aduan == NULL) {
-				$row[] = 'Lain-lain';
-			} else {
-				$row[] = 'Lebih dari satu';
-			}
+
+			$row[] = $this->column_jenis_aduan($korban);
 
 			$row[] = $korban->nama_korban;
 			$row[] = $korban->umur_korban . " Tahun";
