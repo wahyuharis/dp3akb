@@ -227,7 +227,7 @@ class Perempuan extends CI_Controller
 		$spreadsheet->getActiveSheet()->getStyle('F4')->applyFromArray($tengah2);
 		$sheet->setCellValue('G4', 'Jenis Pengaduan');
 		$spreadsheet->getActiveSheet()->getStyle('G4')->applyFromArray($styleArray);
-		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40, 'px');
+		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(50, 'px');
 		$spreadsheet->getActiveSheet()->getStyle('G4')->applyFromArray($tengah2);
 		$sheet->setCellValue('H4', 'Nama Pelapor');
 		$sheet->getColumnDimension('H')->setAutoSize(true);

@@ -229,7 +229,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?php echo base_url('superadmin/anak/excel') ?>" id="form" class="form-horizontal">
+			<form action="<?php echo base_url('superadmin/anak/excel') ?>" id="form" class="form-horizontal" method="post">
 				<input type="hidden" value="" name="id_korban" />
 				<div class="modal-body">
 					<div class="row">
