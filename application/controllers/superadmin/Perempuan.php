@@ -408,10 +408,8 @@ class Perempuan extends CI_Controller
 			$writer->save('php://output');
 			exit;
 		} else {
-			echo "<script>" .
-				"alert('Data pada tanggal tersebut tidak tersedia'); " .
-				"window.location.href='" . base_url() . "superadmin/perempuan';" .
-				"</script>";
+			$this->session->set_flashdata('success', 'Data pada tanggal tersebut tidak ditemukan');
+			redirect(base_url() . 'superadmin/perempuan');
 		}
 	}
 
