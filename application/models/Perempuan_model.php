@@ -131,16 +131,4 @@ class Perempuan_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
-
-	public function getKet($data1, $data2)
-	{
-		$this->db->select('korban_jenis_pengaduan_rel.*, jenis_pengaduan.keterangan');
-		$this->db->from('korban_jenis_pengaduan_rel');
-		$this->db->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban_jenis_pengaduan_rel.id_jenis_aduan', 'left');
-		$this->db->where('korban_jenis_pengaduan_rel.id_korban =', 'Perempuan');
-		$this->db->where('korban.created_at >=', $data1 . " 00.00");
-		$this->db->where('korban.created_at <=', $data2 . " 23.59");
-		$query = $this->db->get();
-		return $query->result();
-	}
 }

@@ -49,3 +49,7 @@
 .border-left-warning {
 	border-left: 0.25rem solid #e46e38 !important;
 }
+
+.table > tbody > tr > td {
+	vertical-align: middle;
+}

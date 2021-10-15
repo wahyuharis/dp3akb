@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+
 class Anak extends CI_Controller
 {
 	public function __construct()
@@ -124,5 +129,353 @@ class Anak extends CI_Controller
 		);
 		$this->m_anak->update(array('id_korban' => $this->input->post('id_korban')), $data);
 		echo json_encode(array("status" => TRUE));
+	}
+
+	function column_ket($row)
+	{
+		$return = null;
+		$db =	$this->db->where('id_korban', $row->id_korban)
+			->join('jenis_pengaduan', 'jenis_pengaduan.id_jenis_aduan=korban_jenis_pengaduan_rel.id_jenis_aduan')
+			->get('korban_jenis_pengaduan_rel');
+
+		$isi = '';
+		foreach ($db->result() as $res) {
+
+			$isi .= $res->keterangan . "\n";
+		}
+		$return = $isi;
+
+		return $return;
+	}
+
+	public function excel()
+	{
+		$this->load->model('Anak_model');
+
+		$data1 = $this->input->post('tgl1');
+		$data2 = $this->input->post('tgl2');
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$styleArray = [
+			'borders' => [
+				'outline' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					'color' => ['rgb' => '000000'],
+				],
+			],
+		];
+
+		$tengah = [
+			'alignment' => [
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+			],
+		];
+
+		$tengah2 = [
+			'alignment' => [
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+			],
+		];
+
+		$sheet->setCellValue('A1', 'Laporan Data Pengaduan Korban Anak');
+		$spreadsheet->getActiveSheet()->mergeCells('A1:E1');
+		$spreadsheet->getActiveSheet()->getStyle('A1')
+			->getFont()
+			->setSize(16);
+
+		$spreadsheet->getActiveSheet()->getStyle('A1')
+			->getFont()
+			->setBold(true);
+
+		$sheet->setCellValue('A2', 'Periode ' . $this->tgl_indo(date('Y-m-d', strtotime($data1))) . ' sampai ' . $this->tgl_indo(date('Y-m-d', strtotime($data2))));
+		$spreadsheet->getActiveSheet()->mergeCells('A2:E2');
+		$spreadsheet->getActiveSheet()->getStyle('A2')
+			->getFont()
+			->setSize(14);
+
+		$spreadsheet->getActiveSheet()->getStyle('A2')
+			->getFont()
+			->setBold(true);
+
+		$spreadsheet->getActiveSheet()->getStyle('A4:O4')
+			->getFont()
+			->setBold(true);
+
+		$sheet->setCellValue('A4', 'No');
+		$sheet->getColumnDimension('A')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('A4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('A4')->applyFromArray($tengah2);
+		$sheet->setCellValue('B4', 'Nama Korban');
+		$sheet->getColumnDimension('B')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('B4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('B4')->applyFromArray($tengah2);
+		$sheet->setCellValue('C4', 'Umur Korban');
+		$sheet->getColumnDimension('C')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('C4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('C4')->applyFromArray($tengah2);
+		$sheet->setCellValue('D4', 'NIK Korban');
+		$sheet->getColumnDimension('D')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('D4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('D4')->applyFromArray($tengah2);
+		$sheet->setCellValue('E4', 'No HP Korban');
+		$sheet->getColumnDimension('E')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('E4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('E4')->applyFromArray($tengah2);
+		$sheet->setCellValue('F4', 'Alamat Korban');
+		// $sheet->getColumnDimension('F')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(40, 'px');
+		$spreadsheet->getActiveSheet()->getStyle('F4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('F4')->applyFromArray($tengah2);
+		$sheet->setCellValue('G4', 'Jenis Pengaduan');
+		$spreadsheet->getActiveSheet()->getStyle('G4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40, 'px');
+		$spreadsheet->getActiveSheet()->getStyle('G4')->applyFromArray($tengah2);
+		$sheet->setCellValue('H4', 'Nama Pelapor');
+		$sheet->getColumnDimension('H')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('H4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('H4')->applyFromArray($tengah2);
+		$sheet->setCellValue('I4', 'Umur Pelapor');
+		$sheet->getColumnDimension('I')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('I4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('I4')->applyFromArray($tengah2);
+		$sheet->setCellValue('J4', 'Jenis Kelamin Pelapor');
+		$sheet->getColumnDimension('J')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('J4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('J4')->applyFromArray($tengah2);
+		$sheet->setCellValue('K4', 'NIK Pelapor');
+		$sheet->getColumnDimension('K')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($tengah2);
+		$sheet->setCellValue('L4', 'No HP Pelapor');
+		$sheet->getColumnDimension('L')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($tengah2);
+		$sheet->setCellValue('M4', 'Alamat Pelapor');
+		// $sheet->getColumnDimension('M')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(40, 'px');
+		$spreadsheet->getActiveSheet()->getStyle('M4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('M4')->applyFromArray($tengah2);
+		$sheet->setCellValue('N4', 'Status Pengaduan');
+		$sheet->getColumnDimension('N')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('N4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('N4')->applyFromArray($tengah2);
+		$sheet->setCellValue('O4', 'Tanggal Pengaduan');
+		$sheet->getColumnDimension('O')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getStyle('O4')->applyFromArray($styleArray);
+		$spreadsheet->getActiveSheet()->getStyle('O4')->applyFromArray($tengah2);
+
+		$p = $this->Anak_model->getEx($data1, $data2);
+		$no = 1;
+		$x = 5;
+		if (!empty($p)) {
+
+			foreach ($p as $row) {
+				$sheet->setCellValue('A' . $x, $no++);
+				$spreadsheet->getActiveSheet()->getStyle('A' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('A' . $x)->applyFromArray($styleArray);
+
+				$sheet->setCellValue('B' . $x, $row->nama_korban);
+				$spreadsheet->getActiveSheet()->getStyle('B' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('B' . $x)->applyFromArray($tengah);
+
+				$sheet->setCellValue('C' . $x, $row->umur_korban . " Tahun");
+				$spreadsheet->getActiveSheet()->getStyle('C' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('C' . $x)->applyFromArray($tengah);
+
+				if ($row->nik_korban == NULL || $row->nik_korban == "") {
+					$nik2 = "-";
+					$sheet->setCellValue('D' . $x, $nik2);
+				} else {
+					$sheet->setCellValue('D' . $x,  "'" . $row->nik_korban);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('D' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('D' . $x)->applyFromArray($tengah);
+
+				if ($row->nohp_korban == NULL || $row->nohp_korban == "") {
+					$telp = "-";
+					$sheet->setCellValue('E' . $x, $telp);
+				} else {
+					$sheet->setCellValue('E' . $x, $row->nohp_korban);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('E5:E200')
+					->getNumberFormat()
+					->setFormatCode(
+						'000000000000'
+					);
+				$spreadsheet->getActiveSheet()->getStyle('E' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('E' . $x)->applyFromArray($tengah);
+
+				if ($row->alamat_korban == NULL || $row->alamat_korban == "") {
+					$alm = "-";
+					$sheet->setCellValue('F' . $x, $alm);
+				} else {
+					$sheet->setCellValue('F' . $x, $row->alamat_korban);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('F' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('F' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('F' . $x)->getAlignment()->setWrapText(true);
+
+				if ($row->aduan_lain != NULL) {
+					$sheet->setCellValue('G' . $x, $row->aduan_lain . " (Lain-lain)");
+				} else {
+					$sheet->setCellValue('G' . $x, $this->column_ket($row));
+				}
+				$spreadsheet->getActiveSheet()->getStyle('G' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('G' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('G' . $x)->getAlignment()->setWrapText(true);
+
+				$sheet->setCellValue('H' . $x, $row->nama_pelapor);
+				$spreadsheet->getActiveSheet()->getStyle('H' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('H' . $x)->applyFromArray($tengah);
+
+				$sheet->setCellValue('I' . $x, $row->umur_pelapor . " Tahun");
+				$spreadsheet->getActiveSheet()->getStyle('I' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('I' . $x)->applyFromArray($tengah);
+
+				if ($row->jkel_pelapor == "L") {
+					$jkel2 = "Laki-laki";
+					$sheet->setCellValue('J' . $x, $jkel2);
+				} else {
+					$jkel2 = "Perempuan";
+					$sheet->setCellValue('J' . $x, $jkel2);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('J' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('J' . $x)->applyFromArray($tengah);
+
+				if ($row->nik_pelapor == NULL || $row->nik_pelapor == "") {
+					$nik1 = "-";
+					$sheet->setCellValue('K' . $x, $nik1);
+				} else {
+					$sheet->setCellValue('K' . $x, "'" . $row->nik_pelapor);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($tengah);
+
+				if ($row->nohp_pelapor == NULL || $row->nohp_pelapor == "") {
+					$telp1 = "-";
+					$sheet->setCellValue('L' . $x, $telp1);
+				} else {
+					$sheet->setCellValue('L' . $x, $row->nohp_pelapor);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('M5:M200')
+					->getNumberFormat()
+					->setFormatCode(
+						'000000000000'
+					);
+				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($tengah);
+
+				if ($row->alamat_pelapor == NULL || $row->alamat_pelapor == "") {
+					$alm2 = "-";
+					$sheet->setCellValue('M' . $x, $alm2);
+				} else {
+					$sheet->setCellValue('M' . $x, $row->alamat_pelapor);
+				}
+				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->getAlignment()->setWrapText(true);
+
+				if ($row->status_laporan == 1) {
+					$status = "Selesai ditangani";
+					$sheet->setCellValue('N' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('20a76f');
+				} else if ($row->status_laporan == 2) {
+					$status = "Belum ditangani";
+					$sheet->setCellValue('N' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('dd0d0d');
+				} else {
+					$status = "Dalam proses";
+					$sheet->setCellValue('N' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('e46e38');
+				}
+				$spreadsheet->getActiveSheet()->getStyle('N' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('N' . $x)->applyFromArray($tengah);
+
+				$sheet->setCellValue('O' . $x, $this->hari_ini(date('l', strtotime($row->created_at))) . ", " . $this->tgl_indo(date('Y-m-d', strtotime($row->created_at))));
+				$spreadsheet->getActiveSheet()->getStyle('O' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('O' . $x)->applyFromArray($tengah);
+				$x++;
+			}
+			$writer = new Xlsx($spreadsheet);
+			$filename = 'Laporan Korban Anak (Periode ' . date('d-m-Y', strtotime($data1)) . ' sampai ' . date('d-m-Y', strtotime($data2)) . ')';
+
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+			header('Cache-Control: max-age=0');
+
+			$writer->save('php://output');
+			exit;
+		} else {
+			$this->session->set_flashdata('success', 'Data pada tanggal tersebut tidak ditemukan');
+			redirect(base_url() . 'superadmin/anak');
+		}
+	}
+
+	function hari_ini($ini)
+	{
+		$hari = $ini;
+
+		switch ($hari) {
+			case 'Sunday':
+				$hari_ini = "Minggu";
+				break;
+
+			case 'Monday':
+				$hari_ini = "Senin";
+				break;
+
+			case 'Tuesday':
+				$hari_ini = "Selasa";
+				break;
+
+			case 'Wednesday':
+				$hari_ini = "Rabu";
+				break;
+
+			case 'Thursday':
+				$hari_ini = "Kamis";
+				break;
+
+			case 'Friday':
+				$hari_ini = "Jumat";
+				break;
+
+			case 'Saturday':
+				$hari_ini = "Sabtu";
+				break;
+
+			default:
+				$hari_ini = "Tidak di ketahui";
+				break;
+		}
+
+		return $hari_ini;
+	}
+
+	public function tgl_indo($tanggal)
+	{
+		$bulan = array(
+			1 =>   'Januari',
+			'Februari',
+			'Maret',
+			'April',
+			'Mei',
+			'Juni',
+			'Juli',
+			'Agustus',
+			'September',
+			'Oktober',
+			'November',
+			'Desember'
+		);
+		$pecahkan = explode('-', $tanggal);
+
+		return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
 	}
 }

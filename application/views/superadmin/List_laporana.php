@@ -8,6 +8,15 @@
 		<a>Data Pengaduan Korban Anak-anak</a>
 	</div>
 
+	<?php if ($this->session->flashdata('success')) : ?>
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<?php echo $this->session->flashdata('success'); ?>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	<?php endif; ?>
+
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -220,7 +229,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="#" id="form" class="form-horizontal">
+			<form action="<?php echo base_url('superadmin/anak/excel') ?>" id="form" class="form-horizontal">
 				<input type="hidden" value="" name="id_korban" />
 				<div class="modal-body">
 					<div class="row">
@@ -241,7 +250,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="btnUp">Proses</button>
+					<button type="submit" class="btn btn-primary" id="btnDownload">Download</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 				</div>
 			</form>
