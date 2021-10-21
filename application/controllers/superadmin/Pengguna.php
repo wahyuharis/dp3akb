@@ -76,14 +76,6 @@ class Pengguna extends CI_Controller
 				),
 			),
 			array(
-				'field' => 'level',
-				'label' => 'Level',
-				'rules' => 'required',
-				'errors' => array(
-					'required' => '%s tidak boleh kosong',
-				),
-			),
-			array(
 				'field' => 'email',
 				'label' => 'Email',
 				'rules' => 'required',
@@ -105,14 +97,13 @@ class Pengguna extends CI_Controller
 
 		if ($this->form_validation->run() != false) {
 			$fullname = $this->input->post('fullname');
-			$level = $this->input->post('level');
 			$email = $this->input->post('email');
 			$password = $this->input->post('passwd');
 			$jabatan = $this->input->post('jabatan');
 
 			$data = array(
 				'fullname' => $fullname,
-				'level' => $level,
+				'level' => 'Superadmin',
 				'email' => $email,
 				'password' => md5($password),
 				'jabatan' => $jabatan
@@ -130,7 +121,6 @@ class Pengguna extends CI_Controller
 	public function update()
 	{
 		$fullname = $this->input->post('fullname');
-		$level = $this->input->post('level');
 		$email = $this->input->post('email');
 		$password = $this->input->post('passwd');
 		$jabatan = $this->input->post('jabatan');
@@ -138,14 +128,12 @@ class Pengguna extends CI_Controller
 		if ($password == "") {
 			$data = array(
 				'fullname' => $fullname,
-				'level' => $level,
 				'email' => $email,
 				'jabatan' => $jabatan
 			);
 		} else {
 			$data = array(
 				'fullname' => $fullname,
-				'level' => $level,
 				'email' => $email,
 				'password' => md5($password),
 				'jabatan' => $jabatan

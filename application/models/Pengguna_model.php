@@ -46,10 +46,11 @@ class Pengguna_model extends CI_Model
 
 	private function _get_datatables_query()
 	{
-
+		$id = $this->session->userdata('id_user');
 		$this->db->select('users.*');
 		$this->db->from($this->table);
 		$this->db->where('users.deleted_at', null);
+		$this->db->where('users.id_user !=', $id);
 
 		$i = 0;
 

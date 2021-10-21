@@ -21,7 +21,7 @@
 							<span style="color: red;"><?php echo form_error('fullname'); ?></span>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<!-- <div class="col-md-6">
 						<div class="form-group">
 							<label>Level</label>
 							<select name="level" id="level" class="form-control" tabindex="2">
@@ -29,10 +29,17 @@
 								<option value="Superadmin">Superadmin</option>
 								<option value="Admin">Admin</option>
 							</select>
-							<span style="color: red;"><?php echo form_error('level'); ?></span>
+							<span style="color: red;"><?php //echo form_error('level'); 
+														?></span>
+						</div>
+					</div> -->
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Jabatan</label>
+							<input class="form-control" type="text" name="jabatan" id="jabatan" tabindex="2">
+							<span style="color: red;"><?php echo form_error('jabatan'); ?></span>
 						</div>
 					</div>
-
 				</div>
 
 				<div class="row">
@@ -50,19 +57,9 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label>Jabatan</label>
-							<input class="form-control" type="text" name="jabatan" id="jabatan" tabindex="5">
-							<span style="color: red;"><?php echo form_error('jabatan'); ?></span>
-						</div>
-					</div>
-				</div>
 				<!-- </div> -->
-				<input type="submit" class="btn btn-primary" tabindex="6" value="Simpan" />
-				<a href="<?php echo base_url(); ?>superadmin/pengguna" class="btn btn-secondary" tabindex="7">Kembali</a>
+				<input type="submit" class="btn btn-primary" tabindex="5" value="Simpan" />
+				<a href="<?php echo base_url(); ?>superadmin/pengguna" class="btn btn-secondary" tabindex="6">Kembali</a>
 
 			</form>
 		</div>
