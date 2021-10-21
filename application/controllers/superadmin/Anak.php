@@ -216,7 +216,7 @@ class Anak extends CI_Controller
 		$sheet->getColumnDimension('C')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('C4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('C4')->applyFromArray($tengah2);
-		$sheet->setCellValue('D4', 'NIK Korban');
+		$sheet->setCellValue('D4', 'Jenis Kelamin Korban');
 		$sheet->getColumnDimension('D')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('D4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('D4')->applyFromArray($tengah2);
@@ -245,27 +245,27 @@ class Anak extends CI_Controller
 		$sheet->getColumnDimension('J')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('J4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('J4')->applyFromArray($tengah2);
-		$sheet->setCellValue('K4', 'NIK Pelapor');
+		// $sheet->setCellValue('K4', 'NIK Pelapor');
+		// $sheet->getColumnDimension('K')->setAutoSize(true);
+		// $spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($styleArray);
+		// $spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($tengah2);
+		$sheet->setCellValue('K4', 'No HP Pelapor');
 		$sheet->getColumnDimension('K')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('K4')->applyFromArray($tengah2);
-		$sheet->setCellValue('L4', 'No HP Pelapor');
-		$sheet->getColumnDimension('L')->setAutoSize(true);
+		$sheet->setCellValue('L4', 'Alamat Pelapor');
+		// $sheet->getColumnDimension('M')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(40, 'px');
 		$spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('L4')->applyFromArray($tengah2);
-		$sheet->setCellValue('M4', 'Alamat Pelapor');
-		// $sheet->getColumnDimension('M')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(40, 'px');
+		$sheet->setCellValue('M4', 'Status Pengaduan');
+		$sheet->getColumnDimension('M')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('M4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('M4')->applyFromArray($tengah2);
-		$sheet->setCellValue('N4', 'Status Pengaduan');
+		$sheet->setCellValue('N4', 'Tanggal Pengaduan');
 		$sheet->getColumnDimension('N')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getStyle('N4')->applyFromArray($styleArray);
 		$spreadsheet->getActiveSheet()->getStyle('N4')->applyFromArray($tengah2);
-		$sheet->setCellValue('O4', 'Tanggal Pengaduan');
-		$sheet->getColumnDimension('O')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getStyle('O4')->applyFromArray($styleArray);
-		$spreadsheet->getActiveSheet()->getStyle('O4')->applyFromArray($tengah2);
 
 		$p = $this->Anak_model->getEx($data1, $data2);
 		$no = 1;
@@ -285,12 +285,14 @@ class Anak extends CI_Controller
 				$spreadsheet->getActiveSheet()->getStyle('C' . $x)->applyFromArray($styleArray);
 				$spreadsheet->getActiveSheet()->getStyle('C' . $x)->applyFromArray($tengah);
 
-				if ($row->nik_korban == NULL || $row->nik_korban == "") {
-					$nik2 = "-";
-					$sheet->setCellValue('D' . $x, $nik2);
+				if ($row->jkel_korban == "L") {
+					$jkel1 = "Laki-laki";
+					$sheet->setCellValue('D' . $x, $jkel1);
 				} else {
-					$sheet->setCellValue('D' . $x,  "'" . $row->nik_korban);
+					$jkel1 = "Perempuan";
+					$sheet->setCellValue('D' . $x, $jkel1);
 				}
+
 				$spreadsheet->getActiveSheet()->getStyle('D' . $x)->applyFromArray($styleArray);
 				$spreadsheet->getActiveSheet()->getStyle('D' . $x)->applyFromArray($tengah);
 
@@ -300,7 +302,7 @@ class Anak extends CI_Controller
 				} else {
 					$sheet->setCellValue('E' . $x, $row->nohp_korban);
 				}
-				$spreadsheet->getActiveSheet()->getStyle('E5:E200')
+				$spreadsheet->getActiveSheet()->getStyle('E' . $x)
 					->getNumberFormat()
 					->setFormatCode(
 						'000000000000'
@@ -345,61 +347,61 @@ class Anak extends CI_Controller
 				$spreadsheet->getActiveSheet()->getStyle('J' . $x)->applyFromArray($styleArray);
 				$spreadsheet->getActiveSheet()->getStyle('J' . $x)->applyFromArray($tengah);
 
-				if ($row->nik_pelapor == NULL || $row->nik_pelapor == "") {
-					$nik1 = "-";
-					$sheet->setCellValue('K' . $x, $nik1);
-				} else {
-					$sheet->setCellValue('K' . $x, "'" . $row->nik_pelapor);
-				}
-				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($styleArray);
-				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($tengah);
+				// if ($row->nik_pelapor == NULL || $row->nik_pelapor == "") {
+				// 	$nik1 = "-";
+				// 	$sheet->setCellValue('K' . $x, $nik1);
+				// } else {
+				// 	$sheet->setCellValue('K' . $x, "'" . $row->nik_pelapor);
+				// }
+				// $spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($styleArray);
+				// $spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($tengah);
 
 				if ($row->nohp_pelapor == NULL || $row->nohp_pelapor == "") {
 					$telp1 = "-";
-					$sheet->setCellValue('L' . $x, $telp1);
+					$sheet->setCellValue('K' . $x, $telp1);
 				} else {
-					$sheet->setCellValue('L' . $x, $row->nohp_pelapor);
+					$sheet->setCellValue('K' . $x, $row->nohp_pelapor);
 				}
-				$spreadsheet->getActiveSheet()->getStyle('M5:M200')
+				$spreadsheet->getActiveSheet()->getStyle('K' . $x)
 					->getNumberFormat()
 					->setFormatCode(
 						'000000000000'
 					);
-				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($styleArray);
-				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('K' . $x)->applyFromArray($tengah);
 
 				if ($row->alamat_pelapor == NULL || $row->alamat_pelapor == "") {
 					$alm2 = "-";
-					$sheet->setCellValue('M' . $x, $alm2);
+					$sheet->setCellValue('L' . $x, $alm2);
 				} else {
-					$sheet->setCellValue('M' . $x, $row->alamat_pelapor);
+					$sheet->setCellValue('L' . $x, $row->alamat_pelapor);
 				}
-				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($styleArray);
-				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($tengah);
-				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->getAlignment()->setWrapText(true);
+				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->applyFromArray($tengah);
+				$spreadsheet->getActiveSheet()->getStyle('L' . $x)->getAlignment()->setWrapText(true);
 
 				if ($row->status_laporan == 1) {
 					$status = "Selesai ditangani";
-					$sheet->setCellValue('N' . $x, $status);
-					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+					$sheet->setCellValue('M' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('M' . $x)
 						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('20a76f');
 				} else if ($row->status_laporan == 2) {
 					$status = "Belum ditangani";
-					$sheet->setCellValue('N' . $x, $status);
-					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+					$sheet->setCellValue('M' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('M' . $x)
 						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('dd0d0d');
 				} else {
 					$status = "Dalam proses";
-					$sheet->setCellValue('N' . $x, $status);
-					$spreadsheet->getActiveSheet()->getStyle('N' . $x)
+					$sheet->setCellValue('M' . $x, $status);
+					$spreadsheet->getActiveSheet()->getStyle('M' . $x)
 						->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('e46e38');
 				}
+				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($styleArray);
+				$spreadsheet->getActiveSheet()->getStyle('M' . $x)->applyFromArray($tengah);
+
+				$sheet->setCellValue('N' . $x, $this->hari_ini(date('l', strtotime($row->created_at))) . ", " . $this->tgl_indo(date('Y-m-d', strtotime($row->created_at))));
 				$spreadsheet->getActiveSheet()->getStyle('N' . $x)->applyFromArray($styleArray);
 				$spreadsheet->getActiveSheet()->getStyle('N' . $x)->applyFromArray($tengah);
-
-				$sheet->setCellValue('O' . $x, $this->hari_ini(date('l', strtotime($row->created_at))) . ", " . $this->tgl_indo(date('Y-m-d', strtotime($row->created_at))));
-				$spreadsheet->getActiveSheet()->getStyle('O' . $x)->applyFromArray($styleArray);
-				$spreadsheet->getActiveSheet()->getStyle('O' . $x)->applyFromArray($tengah);
 				$x++;
 			}
 			$writer = new Xlsx($spreadsheet);
