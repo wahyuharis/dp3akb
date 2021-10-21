@@ -141,6 +141,7 @@ class Pengguna extends CI_Controller
 		}
 		$this->m_pengguna->update(array('id_user' => $this->input->post('id_user')), $data);
 		$this->session->set_flashdata('success', 'Berhasil disimpan');
+		$this->session->set_userdata('fullname', $fullname);
 		redirect('superadmin/pengguna/edit/' . $this->input->post('id_user') . '');
 	}
 
