@@ -5,8 +5,8 @@ class Anak_model extends CI_Model
 {
 
 	var $table = 'korban';
-	var $column_order = array('keterangan', 'nama_korban', 'nohp_korban', 'nohp_pelapor', 'alamat_korban', 'created_at', 'status_laporan', null); //set column field database for datatable orderable
-	var $column_search = array('keterangan', 'nama_korban', 'nohp_korban', 'nohp_pelapor', 'alamat_korban'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $column_order = array('keterangan', 'nama_korban', 'umur_korban', 'nohp_pelapor',  'status_laporan', 'created_at', null); //set column field database for datatable orderable
+	var $column_search = array('keterangan', 'nama_korban', 'umur_korban', 'nohp_pelapor', 'status_laporan'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('id_korban' => 'desc'); // default order 
 
 	public function __construct()
@@ -17,6 +17,9 @@ class Anak_model extends CI_Model
 
 	private function _get_datatables_query()
 	{
+		if ($this->input->post('dicari')) {
+			$this->db->where('status_laporan', $this->input->post('dicari'));
+		}
 
 		$this->db->select('korban.*, pelapor.nohp_pelapor, jenis_pengaduan.keterangan');
 		$this->db->from($this->table);

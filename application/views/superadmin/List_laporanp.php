@@ -16,6 +16,34 @@
 			</button>
 		</div>
 	<?php endif; ?>
+	<div class="card shadow mb-4">
+		<!-- Card Header - Accordion -->
+		<a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+			<h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
+		</a>
+		<!-- Card Content - Collapse -->
+		<div class="collapse show" id="collapseCardExample">
+			<div class="card-body">
+				<form id="form-filter" class="form-horizontal">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Berdasarkan Status Pengaduan</label>
+								<select name="dicari" id="dicari" class="form-control" tabindex="2">
+									<option value="0" disabled selected>--- Pilih ---</option>
+									<option value="1">Selesai ditangani</option>
+									<option value="2">Belum ditangani</option>
+									<option value="3">Dalam proses</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<button type="button" id="btn-filter" class="btn btn-primary">Filter</button>
+					<button type="button" id="btn-reset" class="btn btn-secondary">Reset</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
@@ -87,7 +115,10 @@
 			// Load data for the table's content from an Ajax source
 			"ajax": {
 				"url": "<?php echo site_url('superadmin/perempuan/ajax_list') ?>",
-				"type": "POST"
+				"type": "POST",
+				"data": function(data) {
+					data.dicari = $('#dicari').val();
+				}
 			},
 
 			"language": {
@@ -108,7 +139,13 @@
 		});
 
 		//set input/textarea/select event when change value, remove class error and remove text help block 
-
+		$('#btn-filter').click(function() { //button filter event click
+			table.ajax.reload(); //just reload table
+		});
+		$('#btn-reset').click(function() { //button reset event click
+			$('#form-filter')[0].reset();
+			table.ajax.reload(); //just reload table
+		});
 	});
 
 
