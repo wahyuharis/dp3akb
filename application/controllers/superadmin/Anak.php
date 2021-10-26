@@ -59,7 +59,7 @@ class Anak extends CI_Controller
 				$row[] = $this->column_jenis_aduan($korban);
 			} else {
 				// $row[] = "<span class='badge badge-dark'>" . $korban->aduan_lain . "</span>";
-				$row[] = '<span class="badge badge-dark">Lain-lain</span>';
+				$row[] = '<span class="badge badge-dark">' . $korban->aduan_lain . ' (Lain-lain)</span>';
 			}
 
 			$row[] = $korban->nama_korban;
