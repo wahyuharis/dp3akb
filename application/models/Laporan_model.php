@@ -10,7 +10,7 @@ class Laporan_model extends CI_Model
         $this->load->database();
     }
 
-    function laporan_list($device_id)
+    function laporan_list($device_id, $page = 0)
     {
         $sql = "SELECT * FROM korban
         JOIN pelapor
@@ -19,8 +19,17 @@ class Laporan_model extends CI_Model
         WHERE pelapor.device_id=" . $this->db->escape($device_id) . " 
         
         ORDER BY id_korban DESC
-        LIMIT 100
         ";
+
+        if ($page < 1) {
+            $limit = 0;
+        } else {
+            $limit = ($page * 5) + 1;
+        }
+
+        $limit_str = " limit " . $limit . "," . (5) . " ";
+
+        $sql = $sql . $limit_str;
 
         $db = $this->db->query($sql);
 
